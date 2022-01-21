@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-
-
+﻿using System.Drawing;
 namespace Catamaran2
 {
-   public class Лодка
+    public class Лодка : Iboat
     {
         /// <summary>
         /// Скорость
@@ -18,21 +11,20 @@ namespace Catamaran2
         /// Вес автомобиля
         /// </summary>
         public float Weight { private set; get; }
-        /// <summary>
-        /// Цвет кузова
-        /// </summary>
         public Color BodyColor { private set; get; }
+        public float Step => Speed * 100 / Weight;
+/// <summary>
+/// Левая координата отрисовки объекта
+/// </summary>
+
+        protected float? _startPosX = null;
         /// <summary>
-        /// Левая координата отрисовки автомобиля
+        /// Верхняя кооридната отрисовки объекта
         /// </summary>
-        private float? _startPosX = null;
-        /// <summary>
-        /// Верхняя кооридната отрисовки автомобиля
-        /// </summary>
-        private float? _startPosY = null;
+        protected float? _startPosY = null;
         /// <summary>
         /// Ширина окна отрисовки
-        /// </summary ///
+        /// </summary>
         private int? _pictureWidth = null;
         /// <summary>
         /// Высота окна отрисовки
@@ -41,94 +33,91 @@ namespace Catamaran2
         /// <summary>
         /// Ширина отрисовки автомобиля
         /// </summary>
-        protected readonly int _carWidth = 80;
+        private readonly int _carWidth = 80;
         /// <summary>
         /// Высота отрисовки автомобиля
         /// </summary>
-        protected readonly int _carHeight = 50;
+        private readonly int _carHeight = 50;
         /// <summary>
-        /// Инициализация свойств
+        /// Признак, что объект переместился
+        /// </summary>
+        private bool _makeStep;
+        /// <summary>
+        /// Конструктор
         /// </summary>
         /// <param name="speed">Скорость</param>
         /// <param name="weight">Вес автомобиля</param>
         /// <param name="bodyColor">Цвет кузова</param>
-        public void Init(int speed, float weight, Color bodyColor)
+        public Лодка(int speed, float weight, Color bodyColor)
         {
             Speed = speed;
             Weight = weight;
             BodyColor = bodyColor;
         }
         /// <summary>
-        /// Установка позиции автомобиля
+        /// Конструктор
         /// </summary>
-        /// <param name="x">Координата X</param>
-        /// <param name="y">Координата Y</param>
-        /// <param name="width">Ширина картинки</param>
-        /// <param name="height">Высота картинки</param>
-        public void SetPosition(int x, int y, int width, int height)
+        /// <param name="speed">Скорость</param>
+        /// <param name="weight">Вес автомобиля</param>
+        /// <param name="bodyColor">Цвет кузова</param>
+        /// <param name="carWidth">Ширина объекта</param>
+        /// <param name="carHeight">Высота объекта</param>
+        protected Лодка(int speed, float weight, Color bodyColor, int carWidth, int
+        carHeight)
         {
-            _startPosX = x;
-            _startPosY = y;
-            _pictureWidth = width;
-            _pictureHeight = height;
+            Speed = speed;
+            Weight = weight;
+            BodyColor = bodyColor;
+            _carWidth = carWidth;
+            _carHeight = carHeight;
         }
-        /// <summary>
-        /// Смена границ формы отрисовки
-        /// </summary>
-        /// <param name="width">Ширина картинки</param>
-        /// <param name="height">Высота картинки</param>
-        public void ChangeBorders(int width, int height)
+
+/// <summary>
+/// Изменение направления пермещения
+/// </summary>
+/// <param name="direction">Направление</param>
+/// <param name="leftIndent">Отступ от левого края,чтобы объект не выходил за границы</param>
+/// <param name="topIndent">Отступ от верхнего края,чтобы объект не выходил за границы</param>
+public virtual void MoveTransport(Перечисление direction, int leftIndent =
+0, int topIndent = 0)
         {
-            _pictureWidth = width;
-            _pictureHeight = height;
-            if (_startPosX + _carWidth > width)
-            {
-                _startPosX = width - _carWidth;
-            }
-            if (_startPosY + _carHeight > height)
-            {
-                _startPosY = height - _carHeight;
-            }
-        }
-        /// <summary>
-        /// Изменение направления пермещения
-        /// </summary>
-        /// <param name="direction">Направление</param>
-        public void MoveTransport(Перечисление direction)
-        {
+            _makeStep = false;
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
             {
                 return;
             }
-            float step = Speed * 100 / Weight;
             switch (direction)
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _carWidth + step < _pictureWidth)
+                    if (_startPosX + _carWidth + Step < _pictureWidth)
                     {
-                        _startPosX += step;
+                        _startPosX += Step;
+                        _makeStep = true;
                     }
                     break;
                 //влево
                 case Перечисление.Left:
-                    if (_startPosX - step > 0)
+                    if (_startPosX - Step > 0)
                     {
-                        _startPosX -= step;
+                        _startPosX -= Step;
+                        _makeStep = true;
                     }
                     break;
                 //вверх
                 case Перечисление.Up:
-                    if (_startPosY - step > 0)
+                    if (_startPosY - Step > 0)
                     {
-                        _startPosY -= step;
+                        _startPosY -= Step;
+                        _makeStep = true;
                     }
-                    break;
+                    break;
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _carHeight + step < _pictureHeight)
+                    if (_startPosY + _carHeight + Step < _pictureHeight)
                     {
-                        _startPosY += step;
+                        _startPosY += Step;
+                        _makeStep = true;
                     }
                     break;
             }
@@ -137,7 +126,7 @@ namespace Catamaran2
         /// Отрисовка автомобиля
         /// </summary>
         /// <param name="g"></param>
-        public void DrawTransport(Graphics g)
+        public virtual void DrawTransport(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
@@ -148,8 +137,9 @@ namespace Catamaran2
             g.DrawEllipse(pen, _startPosX.Value, _startPosY.Value, 20, 20);
             g.DrawEllipse(pen, _startPosX.Value, _startPosY.Value + 30, 20,
             20);
-            g.DrawEllipse(pen, _startPosX.Value + 70, _startPosY.Value, 20,
-            20);
+            
+        g.DrawEllipse(pen, _startPosX.Value + 70, _startPosY.Value, 20,
+        20);
             g.DrawEllipse(pen, _startPosX.Value + 70, _startPosY.Value + 30,
             20, 20);
             g.DrawRectangle(pen, _startPosX.Value - 1, _startPosY.Value + 10,
@@ -195,5 +185,41 @@ namespace Catamaran2
             g.DrawRectangle(pen, _startPosX.Value, _startPosY.Value + 10, 15,
             30);
         }
+        public void SetObject(float x, float y, int width, int height)
+        {
+            _startPosX = x;
+            _startPosY = y;
+            _pictureWidth = width;
+            _pictureHeight = height;
+        }
+        public bool MoveObject(Перечисление direction)
+        {
+            MoveTransport(direction);
+            return _makeStep;
+            
+        }
+        public void DrawObject(Graphics g)
+        {
+            DrawTransport(g);
+        }
+        public void ChangeBorders(int width, int height)
+        {
+            _pictureWidth = width;
+            _pictureHeight = height;
+            if (_startPosX + _carWidth > width)
+            {
+                _startPosX = width - _carWidth;
+            }
+            if (_startPosY + _carHeight > height)
+            {
+                _startPosY = height - _carHeight;
+            }
+        }
+        public (float Left, float Right, float Top, float Bottom)
+        GetCurrentPosition()
+        {
+            return (_startPosX.Value, _startPosX.Value + _carWidth,
+            _startPosY.Value, _startPosY.Value + _carHeight);
+        }
     }
-}
+}
