@@ -20,11 +20,11 @@ namespace Catamaran2
         /// <summary>
         /// Ширина отрисовки автомобиля
         /// </summary>
-        private readonly int _carWidth = 100;
+        private readonly int _carWidth = 150;
         /// <summary>
         /// Высота отрисовки автомобиля
         /// </summary>
-        private readonly int _carHeight = 70;
+        private readonly int _carHeight = 80;
 
         /// <summary>
         /// Дополнительный цвет
@@ -121,82 +121,27 @@ namespace Catamaran2
                 return;
             }
             Pen pen = new(Color.Black);
-            Brush dopBrush = new SolidBrush(DopColor);
-            // отрисуем сперва передний спойлер автомобиля (чтобы потом отрисовка автомобиля на него "легла")
-            if (FrontSpoiler)
-            {
-                g.DrawEllipse(pen, _startPosX.Value + 80, _startPosY.Value
-                - 6, 20, 20);
-                g.DrawEllipse(pen, _startPosX.Value + 80, _startPosY.Value
-                + 35, 20, 20);
-                g.DrawEllipse(pen, _startPosX.Value - 5, _startPosY.Value -
-                6, 20, 20);
-                g.DrawEllipse(pen, _startPosX.Value - 5, _startPosY.Value +
-                35, 20, 20);
-                g.DrawRectangle(pen, _startPosX.Value + 80,
-                _startPosY.Value - 6, 15, 15);
-                g.DrawRectangle(pen, _startPosX.Value + 80,
-                _startPosY.Value + 40, 15, 15);
-                g.DrawRectangle(pen, _startPosX.Value, _startPosY.Value -
-                6, 14, 15);
-                g.DrawRectangle(pen, _startPosX.Value, _startPosY.Value +
-                40, 14, 15);
-                g.FillEllipse(dopBrush, _startPosX.Value + 80,
-                _startPosY.Value - 5, 20, 20);
-                g.FillEllipse(dopBrush, _startPosX.Value + 80,
-                _startPosY.Value + 35, 20, 20);
-                g.FillRectangle(dopBrush, _startPosX.Value + 75,
-                _startPosY.Value, 25, 40);
-                g.FillRectangle(dopBrush, _startPosX.Value + 80,
-                _startPosY.Value - 5, 15, 15);
-                g.FillRectangle(dopBrush, _startPosX.Value + 80,
-                _startPosY.Value + 40, 15, 15);
-                g.FillEllipse(dopBrush, _startPosX.Value - 5,
-                _startPosY.Value - 5, 20, 20);
-                g.FillEllipse(dopBrush, _startPosX.Value - 5,
-                _startPosY.Value + 35, 20, 20);
-                g.FillRectangle(dopBrush, _startPosX.Value - 5,
-                _startPosY.Value, 25, 40);
-                g.FillRectangle(dopBrush, _startPosX.Value,
-                _startPosY.Value - 5, 15, 15);
+            Point[] a = new Point[6];
+            Brush br = new SolidBrush(Color.Green);
+            Brush br2 = new SolidBrush(Color.Blue);
 
-                g.FillRectangle(dopBrush, _startPosX.Value,
-                _startPosY.Value + 40, 15, 15);
-            }
-            // и боковые
-            if (SideSpoiler)
-            {
-                g.DrawRectangle(pen, _startPosX.Value + 25,
-                _startPosY.Value - 6, 39, 10);
-                g.DrawRectangle(pen, _startPosX.Value + 25,
-                _startPosY.Value + 45, 39, 10);
-                g.FillRectangle(dopBrush, _startPosX.Value + 25,
-                _startPosY.Value - 5, 40, 10);
-                g.FillRectangle(dopBrush, _startPosX.Value + 25,
-                _startPosY.Value + 45, 40, 10);
-            }
-            // теперь отрисуем основной кузов автомобиля
-            base.DrawTransport(g);
-            // рисуем гоночные полоски
-            if (SportLine)
-            {
-                g.FillRectangle(dopBrush, _startPosX.Value + 65,
-                _startPosY.Value + 18, 25, 15);
-                g.FillRectangle(dopBrush, _startPosX.Value + 25,
-                _startPosY.Value + 18, 35, 15);
-                g.FillRectangle(dopBrush, _startPosX.Value,
-                _startPosY.Value + 18, 20, 15);
-            }
-            // рисуем задний спойлер автомобиля
-            if (BackSpoiler)
-            {
-                g.FillRectangle(dopBrush, _startPosX.Value - 5,
-                _startPosY.Value, 10, 50);
-                g.DrawRectangle(pen, _startPosX.Value - 5,
-                _startPosY.Value, 10, 50);
-            }
+            a[0] = new Point((int)_startPosX, (int)_startPosY.Value);
+            a[1] = new Point((int)_startPosX + 100, (int)_startPosY);
+            a[2] = new Point((int)_startPosX + 125, (int)_startPosY + 20);
+            a[3] = new Point((int)_startPosX + 100, (int)_startPosY + 40);
+            a[4] = new Point((int)_startPosX, (int)_startPosY + 40);
+            a[5] = new Point((int)_startPosX, (int)_startPosY);
+            g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100, 40);
+
+            Pen pen2 = new(Color.Black, 5);
+            g.DrawEllipse(pen2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
+
+            g.FillEllipse(br2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
+
+
+            g.DrawPolygon(pen, a);
+
+
         }
-        
-
     }
 }
