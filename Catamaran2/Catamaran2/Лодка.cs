@@ -15,7 +15,7 @@ namespace Catamaran2
         /// </summary>
         public int Speed { private set; get; }
         /// <summary>
-        /// Вес автомобиля
+        /// Вес лодки
         /// </summary>
         public float Weight { private set; get; }
         /// <summary>
@@ -23,11 +23,11 @@ namespace Catamaran2
         /// </summary>
         public Color BodyColor { private set; get; }
         /// <summary>
-        /// Левая координата отрисовки автомобиля
+        /// Левая координата отрисовки лодки
         /// </summary>
         private float? _startPosX = null;
         /// <summary>
-        /// Верхняя кооридната отрисовки автомобиля
+        /// Верхняя кооридната отрисовки лодки
         /// </summary>
         private float? _startPosY = null;
         /// <summary>
@@ -39,18 +39,18 @@ namespace Catamaran2
         /// </summary>
         private int? _pictureHeight = null;
         /// <summary>
-        /// Ширина отрисовки автомобиля
+        /// Ширина отрисовки лодки
         /// </summary>
         protected readonly int _carWidth = 80;
         /// <summary>
-        /// Высота отрисовки автомобиля
+        /// Высота отрисовки лодки
         /// </summary>
         protected readonly int _carHeight = 50;
         /// <summary>
         /// Инициализация свойств
         /// </summary>
         /// <param name="speed">Скорость</param>
-        /// <param name="weight">Вес автомобиля</param>
+        /// <param name="weight">Вес лодки</param>
         /// <param name="bodyColor">Цвет кузова</param>
         public void Init(int speed, float weight, Color bodyColor)
         {
@@ -59,7 +59,7 @@ namespace Catamaran2
             BodyColor = bodyColor;
         }
         /// <summary>
-        /// Установка позиции автомобиля
+        /// Установка позиции лодки
         /// </summary>
         /// <param name="x">Координата X</param>
         /// <param name="y">Координата Y</param>
@@ -134,7 +134,7 @@ namespace Catamaran2
             }
         }
         /// <summary>
-        /// Отрисовка автомобиля
+        /// Отрисовка лодки
         /// </summary>
         /// <param name="g"></param>
         public void DrawTransport(Graphics g)
@@ -143,57 +143,27 @@ namespace Catamaran2
             {
                 return;
             }
-            Pen pen = new(Color.Black);
-            //границы автомобиля
-            g.DrawEllipse(pen, _startPosX.Value, _startPosY.Value, 20, 20);
-            g.DrawEllipse(pen, _startPosX.Value, _startPosY.Value + 30, 20,
-            20);
-            g.DrawEllipse(pen, _startPosX.Value + 70, _startPosY.Value, 20,
-            20);
-            g.DrawEllipse(pen, _startPosX.Value + 70, _startPosY.Value + 30,
-            20, 20);
-            g.DrawRectangle(pen, _startPosX.Value - 1, _startPosY.Value + 10,
-            10, 30);
-            g.DrawRectangle(pen, _startPosX.Value + 80, _startPosY.Value + 10,
-            10, 30);
-            g.DrawRectangle(pen, _startPosX.Value + 10, _startPosY.Value - 1,
-            70, 52);
-            //задние фары
-            Brush brRed = new SolidBrush(Color.Red);
-            g.FillEllipse(brRed, _startPosX.Value, _startPosY.Value, 20, 20);
-            g.FillEllipse(brRed, _startPosX.Value, _startPosY.Value + 30, 20,
-            20);
-            //передние фары
-            Brush brYellow = new SolidBrush(Color.Yellow);
-            g.FillEllipse(brYellow, _startPosX.Value + 70, _startPosY.Value,
-            20, 20);
-            g.FillEllipse(brYellow, _startPosX.Value + 70, _startPosY.Value +
-            30, 20, 20);
-            //кузов
-            Brush br = new SolidBrush(BodyColor);
-            g.FillRectangle(br, _startPosX.Value, _startPosY.Value + 10, 10,
-            30);
-            g.FillRectangle(br, _startPosX.Value + 80, _startPosY.Value + 10,
-            10, 30);
-            g.FillRectangle(br, _startPosX.Value + 10, _startPosY.Value, 70,
-            50);
-            //стекла
-            Brush brBlue = new SolidBrush(Color.LightBlue);
-            g.FillRectangle(brBlue, _startPosX.Value + 60, _startPosY.Value +
-            5, 5, 40);
-            g.FillRectangle(brBlue, _startPosX.Value + 20, _startPosY.Value +
-            5, 5, 40);
-            g.FillRectangle(brBlue, _startPosX.Value + 25, _startPosY.Value +
-            3, 35, 2);
-            g.FillRectangle(brBlue, _startPosX.Value + 25, _startPosY.Value +
-            46, 35, 2);
-            //выделяем рамкой крышу
-            g.DrawRectangle(pen, _startPosX.Value + 25, _startPosY.Value + 5,
-            35, 40);
-            g.DrawRectangle(pen, _startPosX.Value + 65, _startPosY.Value + 10,
-            25, 30);
-            g.DrawRectangle(pen, _startPosX.Value, _startPosY.Value + 10, 15,
-            30);
+            Pen pen = new(Color.Black,2);
+
+            Point[] a = new Point[6];
+            a[0] = new Point((int)_startPosX.Value, (int)_startPosY.Value);
+            a[1] = new Point((int)_startPosX.Value+100, (int)_startPosY.Value);
+            a[2] = new Point((int)_startPosX.Value+125, (int)_startPosY.Value+20);
+            a[3] = new Point((int)_startPosX.Value + 100, (int)_startPosY.Value+40);
+            a[4] = new Point((int)_startPosX.Value, (int)_startPosY.Value+40);
+            a[5] = new Point((int)_startPosX.Value, (int)_startPosY.Value);
+            g.DrawEllipse(pen, (int)_startPosX + 10, (int)_startPosY +7, 85, 25);
+
+
+            g.DrawPolygon(pen, a);
+
+
+
+
+
+
+
+
         }
     }
 }
