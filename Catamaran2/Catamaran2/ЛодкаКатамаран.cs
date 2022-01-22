@@ -20,11 +20,11 @@ namespace Catamaran2
         /// <summary>
         /// Ширина отрисовки автомобиля
         /// </summary>
-        private readonly int _carWidth = 150;
+        private readonly int _carWidth = 145;
         /// <summary>
         /// Высота отрисовки автомобиля
         /// </summary>
-        private readonly int _carHeight = 80;
+        private readonly int _carHeight = 70;
 
         /// <summary>
         /// Дополнительный цвет
@@ -33,19 +33,15 @@ namespace Catamaran2
         /// <summary>
         /// Признак наличия переднего спойлера
         /// </summary>
-        public bool FrontSpoiler { private set; get; }
+        public bool Leftpop { private set; get; }
         /// <summary>
         /// Признак наличия боковых спойлеров
         /// </summary>
-        public bool SideSpoiler { private set; get; }
-        /// <summary>
-        /// Признак наличия заднего спойлера
-        /// </summary>
-        public bool BackSpoiler { private set; get; }
+        public bool Rightpop { private set; get; }
         /// <summary>
         /// Признак наличия гоночной полосы
         /// </summary>
-        public bool SportLine { private set; get; }
+        public bool Parus { private set; get; }
         /// <summary>
         /// Инициализация свойств
         /// </summary>
@@ -53,29 +49,29 @@ namespace Catamaran2
         /// <param name="weight">Вес</param>
         /// <param name="bodyColor">Цвет кузова</param>
         /// <param name="dopColor">Дополнительный цвет</param>
-        /// <param name="frontSpoiler">Признак наличия переднего спойлера</param>
-        /// <param name="sideSpoiler">Признак наличия боковых спойлеров</param>
-        /// <param name="backSpoiler">Признак наличия заднего спойлера</param>
-        /// <param name="sportLine">Признак наличия гоночной полосы</param>
+        /// <param name="leftpop">Признак наличия левого поплавка</param>
+        /// <param name="rightpop">Признак наличия правого поплавка</param>
+        /// <param name="parus">Признак наличия  паруса</param>
+       
         public ЛодкаКатамаран(int speed, float weight, Color bodyColor, Color dopColor,
-        bool frontSpoiler, bool sideSpoiler, bool backSpoiler, bool sportLine) :
+        bool leftpop, bool rightpop, bool parus) :
         base(speed, weight, bodyColor, 100, 60)
         {
 
             DopColor = dopColor;
-            FrontSpoiler = frontSpoiler;
-            SideSpoiler = sideSpoiler;
-            BackSpoiler = backSpoiler;
-            SportLine = sportLine;
+            Leftpop = leftpop;
+            Rightpop = rightpop;
+            Parus = parus;
+            
         }
         public override void MoveTransport(Перечисление direction, int leftIndent =
-        884, int topIndent = 439)
+        0, int topIndent = 0)
         {
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
             {
                 return;
             }
-            float step = Speed * 100 / Weight;
+            float Step = Speed * 100 / Weight;
             switch (direction)
             {
                 // вправо
@@ -88,17 +84,18 @@ namespace Catamaran2
                     break;
                 //влево
                 case Перечисление.Left:
-                    if (_startPosX - step > 0)
+                    if (_startPosX- Step > 10 )
 
                     {
-                        _startPosX -= step;
+                        _startPosX -= Step;
                     }
                     break;
                 //вверх
                 case Перечисление.Up:
-                    if (_startPosY - step > 0)
+                    if (_startPosY - Step > 15)
+
                     {
-                        _startPosY -= step;
+                        _startPosY -= Step;
                     }
                     break;
                 //вниз
@@ -120,28 +117,49 @@ namespace Catamaran2
             {
                 return;
             }
-            Pen pen = new(Color.Black);
-            Point[] a = new Point[6];
-            Brush br = new SolidBrush(Color.Green);
-            Brush br2 = new SolidBrush(Color.Blue);
-
-            a[0] = new Point((int)_startPosX, (int)_startPosY.Value);
-            a[1] = new Point((int)_startPosX + 100, (int)_startPosY);
-            a[2] = new Point((int)_startPosX + 125, (int)_startPosY + 20);
-            a[3] = new Point((int)_startPosX + 100, (int)_startPosY + 40);
-            a[4] = new Point((int)_startPosX, (int)_startPosY + 40);
-            a[5] = new Point((int)_startPosX, (int)_startPosY);
-            g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100, 40);
-
-            Pen pen2 = new(Color.Black, 5);
-            g.DrawEllipse(pen2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
-
-            g.FillEllipse(br2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
-
-
-            g.DrawPolygon(pen, a);
-
-
+            Pen pen = new(Color.Black,2);
+            
+            Brush br = new SolidBrush(DopColor);
+            Brush br2 = new SolidBrush(Color.Yellow);
+            if (Leftpop)
+            {
+                Point[] a = new Point[6];
+                a[0] = new Point((int)_startPosX-5, (int)_startPosY+10);
+                a[1] = new Point((int)_startPosX -5, (int)_startPosY-10);
+                a[2] = new Point((int)_startPosX + 100, (int)_startPosY -10);
+                a[3] = new Point((int)_startPosX + 110, (int)_startPosY);
+                a[4] = new Point((int)_startPosX+100, (int)_startPosY + 10);
+                a[5] = new Point((int)_startPosX - 5, (int)_startPosY + 10);
+                g.DrawPolygon(pen, a);
+            }
+            if (Rightpop)
+            {
+                Point[] a = new Point[6];
+                a[0] = new Point((int)_startPosX - 5, (int)_startPosY + 50);
+                a[1] = new Point((int)_startPosX - 5, (int)_startPosY + 30);
+                a[2] = new Point((int)_startPosX + 100, (int)_startPosY + 30);
+                a[3] = new Point((int)_startPosX + 110, (int)_startPosY+ 40);
+                a[4] = new Point((int)_startPosX + 100, (int)_startPosY + 50);
+                a[5] = new Point((int)_startPosX - 5, (int)_startPosY + 50);
+                g.DrawPolygon(pen, a);
+            }
+            base.DrawTransport(g);
+            if(Parus)
+            {
+                Point[] a = new Point[4];
+                a[0] = new Point((int)_startPosX, (int)_startPosY + 20);
+                a[1] = new Point((int)_startPosX +40, (int)_startPosY +20);
+                a[2] = new Point((int)_startPosX + 40, (int)_startPosY - 20);
+                a[3] = new Point((int)_startPosX, (int)_startPosY +20);
+                Point[] b = new Point[4];
+                b[0] = new Point((int)_startPosX+45, (int)_startPosY + 20);
+                b[1] = new Point((int)_startPosX + 105, (int)_startPosY + 20);
+                b[2] = new Point((int)_startPosX + 45, (int)_startPosY - 20);
+                b[3] = new Point((int)_startPosX+45, (int)_startPosY + 20);
+                g.FillPolygon(br2, a);
+                g.FillPolygon(br2, b);
+                
+            }
         }
     }
 }

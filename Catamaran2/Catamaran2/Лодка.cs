@@ -37,7 +37,7 @@ namespace Catamaran2
         /// <summary>
         /// Высота отрисовки лодки
         /// </summary>
-        private readonly int _carHeight = 40;
+        private readonly int _carHeight = 45;
         /// <summary>
         /// Признак, что объект переместился
         /// </summary>
@@ -134,16 +134,17 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
             }
             Pen pen = new(Color.Black);
             Point[] a = new Point[6];
-            Brush br = new SolidBrush(Color.Green);
-            Brush br2 = new SolidBrush(Color.Brown);
+            Brush br = new SolidBrush(Color.Blue);
+            Brush br2 = new SolidBrush(Color.White);
 
-            a[0] = new Point((int)_startPosX, (int)_startPosY.Value);
+            a[0] = new Point((int)_startPosX, (int)_startPosY);
             a[1] = new Point((int)_startPosX + 100, (int)_startPosY);
             a[2] = new Point((int)_startPosX + 125, (int)_startPosY + 20);
             a[3] = new Point((int)_startPosX + 100, (int)_startPosY + 40);
             a[4] = new Point((int)_startPosX, (int)_startPosY + 40);
             a[5] = new Point((int)_startPosX, (int)_startPosY);
             g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100,40);
+            g.FillPolygon(br, a);
 
             Pen pen2 = new(Color.Black,5);
             g.DrawEllipse(pen2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
@@ -151,7 +152,7 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
             g.FillEllipse(br2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
 
 
-            g.DrawPolygon(pen, a);
+            
 
         }
         public void SetObject(float x, float y, int width, int height)

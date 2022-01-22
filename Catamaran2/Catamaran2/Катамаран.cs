@@ -88,7 +88,7 @@ private void RunTest1 (Abstract testObject)
             _car = new ЛодкаКатамаран(rnd.Next(100, 300), rnd.Next(1000, 2000),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256),
-            rnd.Next(0, 256)), true, true, true, true);
+            rnd.Next(0, 256)), true, true, true);
             SetObject(rnd);
         }
 /// <summary>
