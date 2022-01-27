@@ -120,7 +120,8 @@ namespace Catamaran2
             Pen pen = new(Color.Black,2);
             
             Brush br = new SolidBrush(DopColor);
-            Brush br2 = new SolidBrush(Color.Yellow);
+            Brush brYellow = new SolidBrush(Color.Yellow);
+            
             if (Leftpop)
             {
                 Point[] a = new Point[6];
@@ -130,7 +131,8 @@ namespace Catamaran2
                 a[3] = new Point((int)_startPosX + 110, (int)_startPosY);
                 a[4] = new Point((int)_startPosX+100, (int)_startPosY + 10);
                 a[5] = new Point((int)_startPosX - 5, (int)_startPosY + 10);
-                g.DrawPolygon(pen, a);
+                g.FillPolygon(br, a);
+
             }
             if (Rightpop)
             {
@@ -141,7 +143,7 @@ namespace Catamaran2
                 a[3] = new Point((int)_startPosX + 110, (int)_startPosY+ 40);
                 a[4] = new Point((int)_startPosX + 100, (int)_startPosY + 50);
                 a[5] = new Point((int)_startPosX - 5, (int)_startPosY + 50);
-                g.DrawPolygon(pen, a);
+                g.FillPolygon(br, a);
             }
             base.DrawTransport(g);
             if(Parus)
@@ -156,8 +158,8 @@ namespace Catamaran2
                 b[1] = new Point((int)_startPosX + 105, (int)_startPosY + 20);
                 b[2] = new Point((int)_startPosX + 45, (int)_startPosY - 20);
                 b[3] = new Point((int)_startPosX+45, (int)_startPosY + 20);
-                g.FillPolygon(br2, a);
-                g.FillPolygon(br2, b);
+                g.FillPolygon(brYellow, a);
+                g.FillPolygon(brYellow, b);
                 
             }
         }

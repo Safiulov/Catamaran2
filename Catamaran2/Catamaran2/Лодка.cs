@@ -133,23 +133,19 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
                 return;
             }
             Pen pen = new(Color.Black);
+            Brush br = new SolidBrush(BodyColor);
+            Brush brRed = new SolidBrush(Color.Red);
             Point[] a = new Point[6];
-            Brush br = new SolidBrush(Color.Blue);
-            Brush br2 = new SolidBrush(Color.White);
-
             a[0] = new Point((int)_startPosX, (int)_startPosY);
             a[1] = new Point((int)_startPosX + 100, (int)_startPosY);
             a[2] = new Point((int)_startPosX + 125, (int)_startPosY + 20);
             a[3] = new Point((int)_startPosX + 100, (int)_startPosY + 40);
             a[4] = new Point((int)_startPosX, (int)_startPosY + 40);
             a[5] = new Point((int)_startPosX, (int)_startPosY);
-            g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100,40);
             g.FillPolygon(br, a);
-
-            Pen pen2 = new(Color.Black,5);
-            g.DrawEllipse(pen2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
+            g.FillEllipse(brRed, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
             
-            g.FillEllipse(br2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
+           
 
 
             
