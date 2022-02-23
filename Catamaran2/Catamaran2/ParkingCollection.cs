@@ -4,16 +4,16 @@ using System;
 namespace Catamaran2
 {
     /// <summary>
-    /// Класс-коллекция парковок
+    /// Класс-коллекция гаваней
     /// </summary>
     public class ParkingCollection
     {
         /// <summary>
-        /// Словарь (хранилище) с парковками
+        /// Словарь (хранилище) с гаванью
         /// </summary>
         readonly Dictionary<string, Parking<Iboat>> _parkingStages;
         /// <summary>
-        /// Возвращение списка названий парковок
+        /// Возвращение списка названий гаваней
         /// </summary>
         public List<string> Keys => _parkingStages.Keys.ToList();
         /// <summary>
@@ -39,9 +39,9 @@ namespace Catamaran2
         }
 /// <summary>
 
-/// Добавление парковки
+/// Добавление гавани
 /// </summary>
-/// <param name="name">Название парковки</param>
+/// <param name="name">Название гавани</param>
 public void AddParking(string name)
         {
            
@@ -53,9 +53,9 @@ public void AddParking(string name)
 
         }
         /// <summary>
-        /// Удаление парковки
+        /// Удаление гавани
         /// </summary>
-        /// <param name="name">Название парковки</param>
+        /// <param name="name">Название гавани</param>
         public void DelParking(string name)
         {
             for (int i = 0; i < Keys.Count; ++i)
@@ -67,7 +67,7 @@ public void AddParking(string name)
             }
         }
         /// <summary>
-        /// Доступ к парковке
+        /// Доступ к гавани
         /// </summary>
         /// <param name="ind"></param>
         /// <returns></returns>

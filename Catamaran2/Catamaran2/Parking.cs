@@ -4,7 +4,7 @@ using System.Linq;
 namespace Catamaran2
 {
     /// <summary>
-    /// Параметризованный класс для хранения набора объектов от интерфейса    ITransport
+    /// Параметризованный класс для хранения набора объектов от интерфейса    iboat
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class Parking<T> where T : class, Iboat
@@ -14,7 +14,7 @@ public class Parking<T> where T : class, Iboat
         /// </summary>
         private Dictionary<int, T> _places;
         /// <summary>
-        /// Максимальное количество мест на парковке
+        /// Максимальное количество мест на гавани
         /// </summary>
         private readonly int _maxCount;
         /// <summary>
@@ -36,8 +36,8 @@ public class Parking<T> where T : class, Iboat
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="picWidth">Рамзер парковки - ширина</param>
-        /// <param name="picHeight">Рамзер парковки - высота</param>
+        /// <param name="picWidth">Рамзер гавани - ширина</param>
+        /// <param name="picHeight">Рамзер гавани - высота</param>
         public Parking(int picWidth, int picHeight)
         {
             int width = picWidth / _placeSizeWidth;
@@ -49,11 +49,11 @@ public class Parking<T> where T : class, Iboat
         }
 /// <summary>
 /// Перегрузка оператора сложения
-/// Логика действия: на парковку добавляется автомобиль
+/// Логика действия: на гавань добавляется лодка
 /// </summary>
-/// <param name="p">Парковка</param>
+/// <param name="p">Гавань</param>
 
-/// <param name="car">Добавляемый автомобиль</param>
+/// <param name="car">Добавляемая лодка</param>
 /// <returns></returns>
 public static bool operator +(Parking<T> p, T car)
         {
@@ -76,10 +76,10 @@ public static bool operator +(Parking<T> p, T car)
         }
         /// <summary>
         /// Перегрузка оператора вычитания
-        /// Логика действия: с парковки забираем автомобиль
+        /// Логика действия: с гавани забираем лодку
         /// </summary>
-        /// <param name="p">Парковка</param>
-        /// <param name="index">Индекс места, с которого пытаемся извлечь        объект</param>
+        /// <param name="p">Гавань</param>
+        /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
         /// <returns></returns>
         public static T operator -(Parking<T> p, int index)
         {
@@ -94,7 +94,7 @@ public static bool operator +(Parking<T> p, T car)
         /// <summary>
         /// Метод проверки заполнености парковочного места (ячейки массива)
         /// </summary>
-        /// <param name="index">Номер парковочного места (порядковый номер в        массиве)</param>
+        /// <param name="index">Номер парковочного места (порядковый номер в массиве)</param>
  /// <returns></returns>
  private bool CheckFreePlace(int index)
         {
@@ -102,7 +102,7 @@ public static bool operator +(Parking<T> p, T car)
         }
 
         /// <summary>
-        /// Метод отрисовки парковки
+        /// Метод отрисовки гавани
         /// </summary>
         /// <param name="g"></param>
         public void Draw(Graphics g)

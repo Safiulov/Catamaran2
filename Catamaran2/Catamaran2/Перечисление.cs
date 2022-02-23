@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Catamaran2
 {
     /// <summary>
-    /// Направление движения автомобиля
+    /// Направление движения лодки
     /// </summary>
     public enum Перечисление
     {

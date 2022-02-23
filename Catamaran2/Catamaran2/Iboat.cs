@@ -39,4 +39,4 @@ namespace Catamaran2
         /// <returns></returns>
         (float Left, float Right, float Top, float Bottom) GetCurrentPosition();
     }
-}
+}
