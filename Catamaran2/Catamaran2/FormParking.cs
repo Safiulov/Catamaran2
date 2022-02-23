@@ -72,7 +72,7 @@ public FormParking()
                 if (car != null)
                 {
                     Катамаран form = new Катамаран();
-                    form.SetCar(car);
+                    form.Setboat(car);
                     form.ShowDialog();
                     
                 }

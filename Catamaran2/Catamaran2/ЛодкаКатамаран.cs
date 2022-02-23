@@ -2,7 +2,7 @@
 namespace Catamaran2
 {
     /// <summary>
-    /// Класс отрисовки гоночного автомобиля
+    /// Класс отрисовки гоночного лодки
     /// </summary>
     public class ЛодкаКатамаран : Лодка
     {
@@ -18,28 +18,28 @@ namespace Catamaran2
 
 
         /// <summary>
-        /// Ширина отрисовки автомобиля
+        /// Ширина отрисовки лодки
         /// </summary>
-        private readonly int _carWidth = 145;
+        private readonly int _boatWidth = 145;
         /// <summary>
         /// Высота отрисовки автомобиля
-        /// </summary>
-        private readonly int _carHeight = 70;
+        /// </summary>лодки
+        private readonly int _boatHeight = 70;
 
         /// <summary>
         /// Дополнительный цвет
         /// </summary>
         public Color DopColor { private set; get; }
         /// <summary>
-        /// Признак наличия переднего спойлера
+        /// Признак наличия левого поплавка
         /// </summary>
         public bool Leftpop { private set; get; }
         /// <summary>
-        /// Признак наличия боковых спойлеров
+        /// Признак наличия правого поплавка
         /// </summary>
         public bool Rightpop { private set; get; }
         /// <summary>
-        /// Признак наличия гоночной полосы
+        /// Признак наличия паруса
         /// </summary>
         public bool Parus { private set; get; }
         /// <summary>
@@ -76,7 +76,7 @@ namespace Catamaran2
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _carWidth + Step < _pictureWidth)
+                    if (_startPosX + _boatWidth + Step < _pictureWidth)
                     {
                         _startPosX += Step;
 
@@ -100,7 +100,7 @@ namespace Catamaran2
                     break;
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _carHeight + Step < _pictureHeight)
+                    if (_startPosY + _boatHeight + Step < _pictureHeight)
                     {
                         _startPosY += Step;
 
@@ -164,4 +164,4 @@ namespace Catamaran2
             }
         }
     }
-}
+}

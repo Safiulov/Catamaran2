@@ -32,8 +32,8 @@ private readonly int _placeSizeHeight = 80;
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="picWidth">Рамзер парковки - ширина</param>
-        /// <param name="picHeight">Рамзер парковки - высота</param>
+        /// <param name="picWidth">Рамзер гавани - ширина</param>
+        /// <param name="picHeight">Рамзер гавани - высота</param>
         public Parking(int picWidth, int picHeight)
         {
             int width = picWidth / _placeSizeWidth;
@@ -51,18 +51,18 @@ private readonly int _placeSizeHeight = 80;
 
         /// <summary>
         /// Перегрузка оператора сложения
-        /// Логика действия: на парковку добавляется автомобиль
+        /// Логика действия: на гавань добавляется  лодка
         /// </summary>
         /// <param name="p">Парковка</param>
-        /// <param name="car">Добавляемый автомобиль</param>
+        /// <param name="car">Добавляемая лодка</param>
         /// <returns></returns>
-        public static int operator +(Parking<T> p, T car)
+        public static int operator +(Parking<T> p, T boat)
         {
             for (int i = 0; i < p._places.Length; i++)
             {
                 if (p.CheckFreePlace(i))
                 {
-                    p._places[i] = car;
+                    p._places[i] = boat;
                     p._places[i].SetObject(5 + i / 5 * p._placeSizeWidth + 5,
                      i % 5 * p._placeSizeHeight + 20, p._pictureWidth,
                     p._pictureHeight);
@@ -73,9 +73,9 @@ private readonly int _placeSizeHeight = 80;
         }
         /// <summary>
         /// Перегрузка оператора вычитания
-        /// Логика действия: с парковки забираем автомобиль
+        /// Логика действия: с парковки забираем лодку
         /// </summary>
-        /// <param name="p">Парковка</param>
+        /// <param name="p">Гавань</param>
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
 /// <returns></returns>
 public static T operator -(Parking<T> p, int index)
@@ -87,14 +87,14 @@ public static T operator -(Parking<T> p, int index)
             if (!p.CheckFreePlace(index))
 
             {
-                T car = p._places[index];
+                T boat = p._places[index];
                 p._places[index] = null;
-                return car;
+                return boat;
             }
             return null;
         }
         /// <summary>
-        /// Метод отрисовки парковки
+        /// Метод отрисовки гавани
         /// </summary>
         /// <param name="g"></param>
         public void Draw(Graphics g)

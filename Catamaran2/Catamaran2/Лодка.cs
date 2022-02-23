@@ -33,11 +33,11 @@ namespace Catamaran2
         /// <summary>
         /// Ширина отрисовки лодки
         /// </summary>
-        private readonly int _carWidth = 120;
+        private readonly int _boatWidth = 120;
         /// <summary>
         /// Высота отрисовки лодки
         /// </summary>
-        private readonly int _carHeight = 45;
+        private readonly int _boatHeight = 45;
         /// <summary>
         /// Признак, что объект переместился
         /// </summary>
@@ -61,15 +61,15 @@ namespace Catamaran2
         /// <param name="weight">Вес лодки</param>
         /// <param name="bodyColor">Цвет кузова</param>
         /// <param name="carWidth">Ширина объекта</param>
-        /// <param name="carHeight">Высота объекта</param>
-        protected Лодка(int speed, float weight, Color bodyColor, int carWidth, int
-        carHeight)
+        /// <param name="boatHeight">Высота объекта</param>
+        protected Лодка(int speed, float weight, Color bodyColor, int boatWidth, int
+        boatHeight)
         {
             Speed = speed;
             Weight = weight;
             BodyColor = bodyColor;
-            _carWidth = carWidth;
-            _carHeight = carHeight;
+            _boatWidth = boatWidth;
+            _boatHeight = boatHeight;
         }
 
 /// <summary>
@@ -90,7 +90,7 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _carWidth + Step < _pictureWidth)
+                    if (_startPosX + _boatWidth + Step < _pictureWidth)
                     {
                         _startPosX += Step;
                         _makeStep = true;
@@ -114,7 +114,7 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
                     break;
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _carHeight + Step < _pictureHeight)
+                    if (_startPosY + _boatHeight + Step < _pictureHeight)
                     {
                         _startPosY += Step;
                         _makeStep = true;
@@ -172,20 +172,20 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
         {
             _pictureWidth = width;
             _pictureHeight = height;
-            if (_startPosX + _carWidth > width)
+            if (_startPosX + _boatWidth > width)
             {
-                _startPosX = width - _carWidth;
+                _startPosX = width - _boatWidth;
             }
-            if (_startPosY + _carHeight > height)
+            if (_startPosY + _boatHeight > height)
             {
-                _startPosY = height - _carHeight;
+                _startPosY = height - _boatHeight;
             }
         }
         public (float Left, float Right, float Top, float Bottom)
         GetCurrentPosition()
         {
-            return (_startPosX.Value, _startPosX.Value + _carWidth,
-            _startPosY.Value, _startPosY.Value + _carHeight);
+            return (_startPosX.Value, _startPosX.Value + _boatWidth,
+            _startPosY.Value, _startPosY.Value + _boatHeight);
         }
     }
 }

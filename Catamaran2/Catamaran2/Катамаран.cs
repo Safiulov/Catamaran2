@@ -5,7 +5,7 @@ namespace Catamaran2
 {
     public partial class Катамаран : Form
     {
-        private Iboat _car;
+        private Iboat _boat;
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -14,16 +14,16 @@ namespace Catamaran2
             InitializeComponent();
         }
         /// <summary>
-        /// Передача машины на форму
+        /// Передача лодки на форму
         /// </summary>
         /// <param name="car"></param>
-        public void SetCar(Iboat car)
+        public void Setboat(Iboat boat)
         {
-            _car = car;
+            _boat = boat;
             Draw();
         }
         /// <summary>
-        /// Метод отрисовки машины
+        /// Метод отрисовки лодки
         /// </summary>
         private void Draw()
         {
@@ -31,7 +31,7 @@ namespace Catamaran2
         Bitmap bmp = new Bitmap(pictureBox1.Width,
         pictureBox1.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            _car?.DrawObject(gr);
+            _boat?.DrawObject(gr);
             pictureBox1.Image = bmp;
         }
         /// <summary>
@@ -46,16 +46,16 @@ namespace Catamaran2
             switch (name)
             {
                 case "buttonUp":
-                    _car?.MoveObject(Перечисление.Up);
+                    _boat?.MoveObject(Перечисление.Up);
                     break;
                 case "buttonDown":
-                    _car?.MoveObject(Перечисление.Down);
+                    _boat?.MoveObject(Перечисление.Down);
                     break;
                 case "buttonLeft":
-                    _car?.MoveObject(Перечисление.Left);
+                    _boat?.MoveObject(Перечисление.Left);
                     break;
                 case "buttonRight":
-                    _car?.MoveObject(Перечисление.Right);
+                    _boat?.MoveObject(Перечисление.Right);
                     break;
             }
             Draw();
