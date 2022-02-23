@@ -2,7 +2,7 @@
 namespace Catamaran2
 {
     /// <summary>
-    /// Класс отрисовки гоночного автомобиля
+    /// Класс отрисовки катамарана
     /// </summary>
     public class ЛодкаКатамаран : Лодка
     {
@@ -18,28 +18,28 @@ namespace Catamaran2
 
 
         /// <summary>
-        /// Ширина отрисовки автомобиля
+        /// Ширина отрисовки лодки
         /// </summary>
-        private readonly int _carWidth = 145;
+        private readonly int _boatWidth = 145;
         /// <summary>
-        /// Высота отрисовки автомобиля
+        /// Высота отрисовки лодки
         /// </summary>
-        private readonly int _carHeight = 70;
+        private readonly int _boatHeight = 70;
 
         /// <summary>
         /// Дополнительный цвет
         /// </summary>
         public Color DopColor { private set; get; }
         /// <summary>
-        /// Признак наличия переднего спойлера
+        /// Признак наличия левого поплавка
         /// </summary>
         public bool Leftpop { private set; get; }
         /// <summary>
-        /// Признак наличия боковых спойлеров
+        /// Признак наличия правого поплавка
         /// </summary>
         public bool Rightpop { private set; get; }
         /// <summary>
-        /// Признак наличия гоночной полосы
+        /// Признак наличия паруса
         /// </summary>
         public bool Parus { private set; get; }
         /// <summary>
@@ -51,7 +51,7 @@ namespace Catamaran2
         /// <param name="dopColor">Дополнительный цвет</param>
         /// <param name="leftpop">Признак наличия левого поплавка</param>
         /// <param name="rightpop">Признак наличия правого поплавка</param>
-        /// <param name="parus">Признак наличия  паруса</param>
+        /// <param name="parus">Признак наличия паруса</param>
        
         public ЛодкаКатамаран(int speed, float weight, Color bodyColor, Color dopColor,
         bool leftpop, bool rightpop, bool parus) :
@@ -64,7 +64,7 @@ namespace Catamaran2
             Parus = parus;
             
         }
-        public override void MoveTransport(Перечисление direction, int leftIndent =
+        public override void Moveboat(Перечисление direction, int leftIndent =
         0, int topIndent = 0)
         {
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
@@ -76,7 +76,7 @@ namespace Catamaran2
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _carWidth + Step < _pictureWidth)
+                    if (_startPosX + _boatWidth + Step < _pictureWidth)
                     {
                         _startPosX += Step;
 
@@ -100,7 +100,7 @@ namespace Catamaran2
                     break;
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _carHeight + Step < _pictureHeight)
+                    if (_startPosY + _boatHeight + Step < _pictureHeight)
                     {
                         _startPosY += Step;
 
@@ -111,7 +111,7 @@ namespace Catamaran2
 
 
         }
-        public override void DrawTransport(Graphics g)
+        public override void Drawboat(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
@@ -143,7 +143,7 @@ namespace Catamaran2
                 a[5] = new Point((int)_startPosX - 5, (int)_startPosY + 50);
                 g.DrawPolygon(pen, a);
             }
-            base.DrawTransport(g);
+            base.Drawboat(g);
             if(Parus)
             {
                 Point[] a = new Point[4];
@@ -162,4 +162,4 @@ namespace Catamaran2
             }
         }
     }
-}
+}
