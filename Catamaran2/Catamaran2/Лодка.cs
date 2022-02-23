@@ -41,11 +41,11 @@ namespace Catamaran2
         /// <summary>
         /// Ширина отрисовки лодки
         /// </summary>
-        protected readonly int _carWidth = 80;
+        protected readonly int _boatWidth = 120;
         /// <summary>
         /// Высота отрисовки лодки
         /// </summary>
-        protected readonly int _carHeight = 50;
+        protected readonly int _boatHeight = 50;
         /// <summary>
         /// Инициализация свойств
         /// </summary>
@@ -81,20 +81,20 @@ namespace Catamaran2
         {
             _pictureWidth = width;
             _pictureHeight = height;
-            if (_startPosX + _carWidth > width)
+            if (_startPosX + _boatWidth > width)
             {
-                _startPosX = width - _carWidth;
+                _startPosX = width - _boatWidth;
             }
-            if (_startPosY + _carHeight > height)
+            if (_startPosY + _boatHeight > height)
             {
-                _startPosY = height - _carHeight;
+                _startPosY = height - _boatHeight;
             }
         }
         /// <summary>
         /// Изменение направления пермещения
         /// </summary>
         /// <param name="direction">Направление</param>
-        public void MoveTransport(Перечисление direction)
+        public void Moveboat(Перечисление direction)
         {
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
             {
@@ -105,7 +105,7 @@ namespace Catamaran2
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _carWidth + step < _pictureWidth)
+                    if (_startPosX + _boatWidth + step < _pictureWidth)
                     {
                         _startPosX += step;
                     }
@@ -126,7 +126,7 @@ namespace Catamaran2
                     break;
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _carHeight + step < _pictureHeight)
+                    if (_startPosY + _boatHeight + step < _pictureHeight)
                     {
                         _startPosY += step;
                     }
@@ -137,7 +137,7 @@ namespace Catamaran2
         /// Отрисовка лодки
         /// </summary>
         /// <param name="g"></param>
-        public void DrawTransport(Graphics g)
+        public void Drawboat(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
