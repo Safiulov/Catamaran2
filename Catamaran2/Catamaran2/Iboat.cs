@@ -26,7 +26,7 @@ namespace Catamaran2
         /// Изменение направления пермещения объекта
         /// </summary>
         /// <param name="direction">Направление</param>
-        /// <returns></returns>
+        /// <returns></returns>z
         bool MoveObject(Перечисление direction);
         /// <summary>
         /// Отрисовка объекта
@@ -37,6 +37,15 @@ namespace Catamaran2
         /// Получение текущей позиции объекта
         /// </summary>
         /// <returns></returns>
+
+        /// <summary>
+        /// Смена основного цвета лодки
+        /// </summary>
+        /// <param name="color"></param>
+
+        void SetMainColor(Color color);
+
+
         (float Left, float Right, float Top, float Bottom) GetCurrentPosition();
     }
 }

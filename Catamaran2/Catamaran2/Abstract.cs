@@ -1,4 +1,5 @@
-﻿namespace Catamaran2
+﻿using System.Drawing;
+namespace Catamaran2
 {
     /// <summary>
     /// Класс с общей логикой тестирования объекта
@@ -26,13 +27,17 @@ protected int _pictureWidth=900;
     {
         _object = obj;
     }
-    /// <summary>
-    /// Логика установки позиции объекта
-    /// </summary>
-    /// <param name="pictureWidth"></param>
-    /// <param name="pictureHeight"></param>
-    /// <returns>true - установка прошла успешно, false - не хватает данных     для установки</returns>
-public virtual bool SetPosition(int pictureWidth, int pictureHeight)
+        /// <summary>
+        /// Логика установки позиции объекта
+        /// </summary>
+        /// <param name="pictureWidth"></param>
+        /// <param name="pictureHeight"></param>
+        /// <returns>true - установка прошла успешно, false - не хватает данных     для установки</returns>
+
+      
+
+
+        public virtual bool SetPosition(int pictureWidth, int pictureHeight)
     {
         if (_object == null)
         {
@@ -50,5 +55,7 @@ public virtual bool SetPosition(int pictureWidth, int pictureHeight)
     /// </summary>
     /// <returns>Результат тестирования</returns>
     public abstract string TestObject();
-}
+
+  
+    }
 }

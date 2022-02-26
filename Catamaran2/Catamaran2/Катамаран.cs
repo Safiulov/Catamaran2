@@ -14,16 +14,16 @@ namespace Catamaran2
             InitializeComponent();
         }
         /// <summary>
-        /// Передача машины на форму
+        /// Передача лодки на форму
         /// </summary>
-        /// <param name="car"></param>
-        public void SetCar(Iboat boat)
+        /// <param name="boat"></param>
+        public void Setboat(Iboat boat)
         {
             _boat = boat;
             Draw();
         }
         /// <summary>
-        /// Метод отрисовки машины
+        /// Метод отрисовки лодки
         /// </summary>
         private void Draw()
         {

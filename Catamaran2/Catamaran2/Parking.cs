@@ -53,9 +53,9 @@ public class Parking<T> where T : class, Iboat
 /// </summary>
 /// <param name="p">Гавань</param>
 
-/// <param name="car">Добавляемая лодка</param>
+/// <param name="boat">Добавляемая лодка</param>
 /// <returns></returns>
-public static bool operator +(Parking<T> p, T car)
+public static bool operator +(Parking<T> p, T boat)
         {
             if (p._places.Count == p._maxCount)
             {
@@ -65,7 +65,7 @@ public static bool operator +(Parking<T> p, T car)
             {
                 if (p.CheckFreePlace(i))
                 {
-                    p._places.Add(i,car);
+                    p._places.Add(i,boat);
                     p._places[i].SetObject(5 + i / 5 * p._placeSizeWidth + 5,
                      i % 5 * p._placeSizeHeight + 15, p._pictureWidth,
                     p._pictureHeight);

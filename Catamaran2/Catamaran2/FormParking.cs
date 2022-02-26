@@ -6,7 +6,7 @@ namespace Catamaran2
     public partial class FormParking : Form
     {
         /// <summary>
-        /// Объект от класса-коллекции парковок
+        /// Объект от класса-коллекции гаваней
         /// </summary>
         private readonly ParkingCollection _parkingCollection;
         public FormParking()
@@ -39,7 +39,7 @@ namespace Catamaran2
             }
         }
         /// <summary>
-        /// Метод отрисовки парковки
+        /// Метод отрисовки гавани
         /// </summary>
         private void Draw()
         {
@@ -53,7 +53,7 @@ pictureBox2.Height);
             }
         }
         /// <summary>
-        /// Обработка нажатия кнопки "Добавить парковку"
+        /// Обработка нажатия кнопки "Добавить гавань"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -61,7 +61,7 @@ pictureBox2.Height);
         {
             if (string.IsNullOrEmpty(textBox1.Text))
             {
-                MessageBox.Show("Введите название парковки", "Ошибка",
+                MessageBox.Show("Введите название гавани", "Ошибка",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -70,7 +70,7 @@ pictureBox2.Height);
         }
 
 /// <summary>
-/// Обработка нажатия кнопки "Удалить парковку"
+/// Обработка нажатия кнопки "Удалить гавань"
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
@@ -85,11 +85,11 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
             }
         }
         /// <summary>
-        /// Обработка нажатия кнопки "Припарковать автомобиль"
+        /// Обработка нажатия кнопки "Припарковать лодку"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSetCar_Click(object sender, EventArgs e)
+        private void ButtonSetboat_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1)
             {
@@ -101,11 +101,11 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
             }
         }
         /// <summary>
-        /// Обработка нажатия кнопки "Припарковать гоночный автомобиль"
+        /// Обработка нажатия кнопки "Припарковать катамаран"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSetSportCar_Click(object sender, EventArgs e)
+        private void ButtonSetcatamaran_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1)
             {
@@ -127,7 +127,7 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-private void ButtonTakeCar_Click(object sender, EventArgs e)
+private void ButtonTakeboat_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1 && maskedTextBox1.Text !=
             "")
@@ -138,7 +138,7 @@ private void ButtonTakeCar_Click(object sender, EventArgs e)
                 if (car != null)
                 {
                     Катамаран form = new Катамаран();
-                    form.SetCar(car);
+                    form.Setboat(car);
                     form.ShowDialog();
                 }
                 Draw();
@@ -154,13 +154,13 @@ private void ButtonTakeCar_Click(object sender, EventArgs e)
         /// <summary>
         /// Добавление объекта в класс-хранилище
         /// </summary>
-        /// <param name="car"></param>
-        private void AddToParking(Лодка car)
+        /// <param name="boat"></param>
+        private void AddToParking(Лодка boat)
         {
             if (listBox1.SelectedIndex > -1)
             {
                 if
-                (_parkingCollection[listBox1.SelectedItem.ToString()] + car)
+                (_parkingCollection[listBox1.SelectedItem.ToString()] + boat)
                 {
                     Draw();
                 }
@@ -170,5 +170,45 @@ private void ButtonTakeCar_Click(object sender, EventArgs e)
                 }
             }
         }
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить автомобиль"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить автомобиль"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonSetBoat_Click(object sender, EventArgs e)
+        {
+            var formCarConfig = new Formboatconfig();
+            formCarConfig.AddEvent(Addboat);
+            formCarConfig.Show();
+        }
+        /// <summary>
+        /// Метод добавления машины
+        /// </summary>
+        /// <param name="car"></param>
+        private void Addboat(Iboat boat)
+        {
+            if (boat != null && listBox1.SelectedIndex > -1)
+            {
+                if
+                ((_parkingCollection[listBox1.SelectedItem.ToString()]) + boat)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Лодку не удалось поставить");
+                }
+            }
+        }
     }
 }
+
+
+
+
+ 
