@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 namespace Catamaran2
 {
     public class Лодка : Iboat
@@ -190,9 +191,9 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
             return (_startPosX.Value, _startPosX.Value + _boatWidth,
             _startPosY.Value, _startPosY.Value + _boatHeight);
         }
-    
-    
-    
-    
+       
+
+
+
     }
 }

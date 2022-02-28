@@ -133,5 +133,9 @@ public static bool operator +(Parking<T> p, T boat)
                 _placeSizeWidth, (_pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
         }
+
+
+
+
     }
 }

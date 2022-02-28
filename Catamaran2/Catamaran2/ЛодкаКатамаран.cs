@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Drawing;
 namespace Catamaran2
 {
@@ -173,22 +174,16 @@ namespace Catamaran2
 
             }
         }
-        /// <summary>
-        /// Смена дополнительного цвета
-        /// </summary>
-        /// <param name="color"></param>
-      
 
 
-      
-
-
-
-
-
-
-    }
+       
 }
+}
+
+      
+
+
+      
 
 
 
