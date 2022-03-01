@@ -14,7 +14,7 @@ namespace Catamaran2
             InitializeComponent();
             _parkingCollection = new
             ParkingCollection(pictureBox2.Width, pictureBox2.Height);
-            
+
         }
         /// <summary>
         /// Заполнение listBoxLevels
@@ -45,8 +45,8 @@ namespace Catamaran2
         {
             if (listBox1.SelectedIndex > -1)
             {//если выбран один из пуктов в listBox (при старте программы ни один пункт не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться к элементу listBox)
-Bitmap bmp = new Bitmap(pictureBox2.Width,
-pictureBox2.Height);
+                Bitmap bmp = new Bitmap(pictureBox2.Width,
+                pictureBox2.Height);
                 Graphics gr = Graphics.FromImage(bmp);
                 _parkingCollection[listBox1.SelectedItem.ToString()].Draw(gr);
                 pictureBox2.Image = bmp;
@@ -69,17 +69,18 @@ pictureBox2.Height);
             ReloadLevels();
         }
 
-/// <summary>
-/// Обработка нажатия кнопки "Удалить парковку"
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
-private void ButtonDelParking_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработка нажатия кнопки "Удалить парковку"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDelParking_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1)
             {
                 if (MessageBox.Show($"Удалить парковку { listBox1.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-{                    _parkingCollection.DelParking(listBox1.SelectedItem.ToString());
+                {
+                    _parkingCollection.DelParking(listBox1.SelectedItem.ToString());
                     ReloadLevels();
                 }
             }
@@ -121,24 +122,24 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
                 }
             }
         }
-/// <summary>
-/// Обработка нажатия кнопки "Забрать"
+        /// <summary>
+        /// Обработка нажатия кнопки "Забрать"
 
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
-private void ButtonTakeCar_Click(object sender, EventArgs e)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonTakeCar_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1 && maskedTextBox1.Text !=
             "")
             {
-                var car =
+                var boat =
                 _parkingCollection[listBox1.SelectedItem.ToString()] -
                 Convert.ToInt32(maskedTextBox1.Text);
-                if (car != null)
+                if (boat != null)
                 {
                     Катамаран form = new Катамаран();
-                    form.SetCar(car);
+                    form.Setboat(boat);
                     form.ShowDialog();
                 }
                 Draw();
@@ -160,7 +161,7 @@ private void ButtonTakeCar_Click(object sender, EventArgs e)
             if (listBox1.SelectedIndex > -1)
             {
                 if
-                (_parkingCollection[listBox1.SelectedItem.ToString()] + car)
+                (_parkingCollection[listBox1.SelectedItem.ToString()] + car >=0 )
                 {
                     Draw();
                 }

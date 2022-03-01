@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 namespace Catamaran2
@@ -12,7 +13,7 @@ public class Parking<T> where T : class, Iboat
         /// <summary>
         /// Список объектов, которые храним
         /// </summary>
-        private Dictionary<int, T> _places;
+        private readonly List<T> _places;
         /// <summary>
         /// Максимальное количество мест на гавани
         /// </summary>
@@ -45,7 +46,7 @@ public class Parking<T> where T : class, Iboat
             _maxCount = width * height;
             _pictureWidth = picWidth;
             _pictureHeight = picHeight;
-            _places = new Dictionary<int, T>();
+            _places = new List<T>();
         }
 /// <summary>
 /// Перегрузка оператора сложения
@@ -53,26 +54,24 @@ public class Parking<T> where T : class, Iboat
 /// </summary>
 /// <param name="p">Гавань</param>
 
-/// <param name="car">Добавляемая лодка</param>
+/// <param name="boat">Добавляемая лодка</param>
 /// <returns></returns>
-public static bool operator +(Parking<T> p, T car)
+public static int operator +(Parking<T> p, T boat)
         {
             if (p._places.Count == p._maxCount)
             {
-                return false;
+                return -1;
             }
             for (int i = 0; i < p._maxCount; i++)
             {
-                if (p.CheckFreePlace(i))
-                {
-                    p._places.Add(i,car);
+                    p._places.Add(boat);
                     p._places[i].SetObject(5 + i / 5 * p._placeSizeWidth + 5,
                      i % 5 * p._placeSizeHeight + 15, p._pictureWidth,
                     p._pictureHeight);
-                    return true;
-                }
+                    return i;
+               
             }
-            return false;
+            return -1;
         }
         /// <summary>
         /// Перегрузка оператора вычитания
@@ -83,23 +82,26 @@ public static bool operator +(Parking<T> p, T car)
         /// <returns></returns>
         public static T operator -(Parking<T> p, int index)
         {
-            if (!p.CheckFreePlace(index))
+            if(p.CheckFreePlace(index) && index<=p._maxCount)
             {
-                T car = p._places[index];
-                p._places.Remove(index);
-                return car;
+                    T boat = p._places[index];
+                    p._places.Remove(boat);
+                    return boat;
+
             }
+            
             return null;
         }
         /// <summary>
         /// Метод проверки заполнености парковочного места (ячейки массива)
         /// </summary>
         /// <param name="index">Номер парковочного места (порядковый номер в массиве)</param>
- /// <returns></returns>
- private bool CheckFreePlace(int index)
+        /// <returns></returns>
+        private bool CheckFreePlace(int index)
         {
-            return !_places.ContainsKey(index);
+            return _places.Contains(_places[index]);
         }
+
 
         /// <summary>
         /// Метод отрисовки гавани
@@ -108,10 +110,11 @@ public static bool operator +(Parking<T> p, T car)
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            var keys = _places.Keys.ToList();
-            for (int i = 0; i < keys.Count; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[keys[i]].DrawObject(g);
+                _places[i].SetObject(5 + i / 5 * _placeSizeWidth + 5, i %
+                5 * _placeSizeHeight + 15, _pictureWidth, _pictureHeight);
+                _places[i].DrawObject(g);
             }
         }
         /// <summary>

@@ -24,7 +24,7 @@ namespace Catamaran2
         /// Высота окна отрисовки
         /// </summary>
         private readonly int _pictureHeight;
-        
+
 
         /// <summary>
         /// Конструктор
@@ -37,16 +37,16 @@ namespace Catamaran2
             _pictureWidth = pictureWidth;
             _pictureHeight = pictureHeight;
         }
-/// <summary>
+        /// <summary>
 
-/// Добавление гавани
-/// </summary>
-/// <param name="name">Название гавани</param>
-public void AddParking(string name)
+        /// Добавление гавани
+        /// </summary>
+        /// <param name="name">Название гавани</param>
+        public void AddParking(string name)
         {
-           
+
             {
-                _parkingStages.Add(name , new Parking<Iboat>(_pictureWidth,
+                _parkingStages.Add(name, new Parking<Iboat>(_pictureWidth,
                _pictureHeight));
             }
 
@@ -60,7 +60,7 @@ public void AddParking(string name)
         {
             for (int i = 0; i < Keys.Count; ++i)
             {
-                if (Keys[i] ==  name )
+                if (Keys[i] == name)
                 {
                     _parkingStages.Remove(Keys[i]);
                 }

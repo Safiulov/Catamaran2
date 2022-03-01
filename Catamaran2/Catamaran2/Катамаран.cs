@@ -17,7 +17,7 @@ namespace Catamaran2
         /// Передача машины на форму
         /// </summary>
         /// <param name="car"></param>
-        public void SetCar(Iboat boat)
+        public void Setboat(Iboat boat)
         {
             _boat = boat;
             Draw();
