@@ -161,7 +161,7 @@ namespace Catamaran2
             if (listBox1.SelectedIndex > -1)
             {
                 if
-                (_parkingCollection[listBox1.SelectedItem.ToString()] + car >=0 )
+                (_parkingCollection[listBox1.SelectedItem.ToString()] + car)
                 {
                     Draw();
                 }
