@@ -12,7 +12,7 @@ public class Parking<T> where T : class, Iboat
         /// <summary>
         /// Список объектов, которые храним
         /// </summary>
-        private Dictionary<int, T> _places;
+        private List<T> _places;
         /// <summary>
         /// Максимальное количество мест на гавани
         /// </summary>
@@ -45,7 +45,7 @@ public class Parking<T> where T : class, Iboat
             _maxCount = width * height;
             _pictureWidth = picWidth;
             _pictureHeight = picHeight;
-            _places = new Dictionary<int, T>();
+            _places = new List<T>();
         }
 /// <summary>
 /// Перегрузка оператора сложения
@@ -63,9 +63,9 @@ public static bool operator +(Parking<T> p, T boat)
             }
             for (int i = 0; i < p._maxCount; i++)
             {
-                if (p.CheckFreePlace(i))
+                
                 {
-                    p._places.Add(i,boat);
+                    p._places.Add(boat);
                     p._places[i].SetObject(5 + i / 5 * p._placeSizeWidth + 5,
                      i % 5 * p._placeSizeHeight + 15, p._pictureWidth,
                     p._pictureHeight);
@@ -86,7 +86,7 @@ public static bool operator +(Parking<T> p, T boat)
             if (!p.CheckFreePlace(index))
             {
                 T car = p._places[index];
-                p._places.Remove(index);
+                p._places.Remove(car);
                 return car;
             }
             return null;
@@ -98,7 +98,7 @@ public static bool operator +(Parking<T> p, T boat)
  /// <returns></returns>
  private bool CheckFreePlace(int index)
         {
-            return !_places.ContainsKey(index);
+            return !_places.Contains(_places[index]);
         }
 
         /// <summary>
@@ -108,10 +108,11 @@ public static bool operator +(Parking<T> p, T boat)
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            var keys = _places.Keys.ToList();
-            for (int i = 0; i < keys.Count; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[keys[i]].DrawObject(g);
+                _places[i].SetObject(5 + i / 5 * _placeSizeWidth + 5, i %
+                5 * _placeSizeHeight + 15, _pictureWidth, _pictureHeight);
+                _places[i].DrawObject(g);
             }
         }
         /// <summary>
