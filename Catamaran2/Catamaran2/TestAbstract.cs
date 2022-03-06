@@ -24,7 +24,7 @@
             }
             while (_object.MoveObject(Перечисление.Left))
             {
-                if (_object.GetCurrentPosition().Left < 0)
+                if (_object.GetCurrentPosition().Left < 0 )
                 {
                     return "Объект вышел за левый край";
                 }

@@ -82,11 +82,11 @@ namespace Catamaran2
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(884, 439);
+            this.pictureBox1.Size = new System.Drawing.Size(884, 461);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.PictureBoxboat_Resize);
+            this.pictureBox1.Resize += new System.EventHandler(this.PictureBoxboat_Resize);
             // 
             // button1
             // 
@@ -166,6 +166,7 @@ namespace Catamaran2
             this.button4.Text = "Создать катамаран";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.ButtonCreateModify_Click);
+            this.button4.Resize += new System.EventHandler(this.PictureBoxboat_Resize);
             // 
             // comboBox2
             // 
@@ -190,8 +191,8 @@ namespace Catamaran2
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "Катамаран";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Катамаран";
@@ -216,7 +217,7 @@ namespace Catamaran2
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonUp;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button RunTest;
+        
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button4;

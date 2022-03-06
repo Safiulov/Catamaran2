@@ -8,7 +8,7 @@ namespace Catamaran2
         /// </summary>
         public int Speed { private set; get; }
         /// <summary>
-        /// Вес лодки
+        /// Вес автомобиля
         /// </summary>
         public float Weight { private set; get; }
         public Color BodyColor { private set; get; }
@@ -17,7 +17,7 @@ namespace Catamaran2
 /// Левая координата отрисовки объекта
 /// </summary>
 
-        protected float? _startPosX = null;
+protected float? _startPosX = null;
         /// <summary>
         /// Верхняя кооридната отрисовки объекта
         /// </summary>
@@ -31,13 +31,13 @@ namespace Catamaran2
         /// </summary>
         private int? _pictureHeight = null;
         /// <summary>
-        /// Ширина отрисовки лодки
+        /// Ширина отрисовки автомобиля
         /// </summary>
-        private readonly int _boatWidth = 120;
+        private readonly int _carWidth = 120;
         /// <summary>
-        /// Высота отрисовки лодки
+        /// Высота отрисовки автомобиля
         /// </summary>
-        private readonly int _boatHeight = 45;
+        private readonly int _carHeight = 60;
         /// <summary>
         /// Признак, что объект переместился
         /// </summary>
@@ -46,7 +46,7 @@ namespace Catamaran2
         /// Конструктор
         /// </summary>
         /// <param name="speed">Скорость</param>
-        /// <param name="weight">Вес лодки</param>
+        /// <param name="weight">Вес автомобиля</param>
         /// <param name="bodyColor">Цвет кузова</param>
         public Лодка(int speed, float weight, Color bodyColor)
         {
@@ -58,18 +58,18 @@ namespace Catamaran2
         /// Конструктор
         /// </summary>
         /// <param name="speed">Скорость</param>
-        /// <param name="weight">Вес лодки</param>
+        /// <param name="weight">Вес автомобиля</param>
         /// <param name="bodyColor">Цвет кузова</param>
         /// <param name="carWidth">Ширина объекта</param>
         /// <param name="carHeight">Высота объекта</param>
-        protected Лодка(int speed, float weight, Color bodyColor, int boatWidth, int
-        boatHeight)
+        protected Лодка(int speed, float weight, Color bodyColor, int carWidth, int
+        carHeight)
         {
             Speed = speed;
             Weight = weight;
             BodyColor = bodyColor;
-            _boatWidth = boatWidth;
-            _boatHeight = boatHeight;
+            _carWidth = carWidth;
+            _carHeight = carHeight;
         }
 
 /// <summary>
@@ -78,8 +78,7 @@ namespace Catamaran2
 /// <param name="direction">Направление</param>
 /// <param name="leftIndent">Отступ от левого края,чтобы объект не выходил за границы</param>
 /// <param name="topIndent">Отступ от верхнего края,чтобы объект не выходил за границы</param>
-public virtual void Moveboat(Перечисление direction, int leftIndent =
-0, int topIndent = 0)
+public virtual void MoveTransport(Перечисление direction, int leftIndent = 5, int topIndent = 10)
         {
             _makeStep = false;
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
@@ -90,7 +89,7 @@ public virtual void Moveboat(Перечисление direction, int leftIndent 
             {
                 // вправо
                 case Перечисление.Right:
-                    if (_startPosX + _boatWidth + Step < _pictureWidth)
+                    if (_startPosX + _carWidth + Step < _pictureWidth)
                     {
                         _startPosX += Step;
                         _makeStep = true;
@@ -112,10 +111,9 @@ public virtual void Moveboat(Перечисление direction, int leftIndent 
                         _makeStep = true;
                     }
                     break;
-
                 //вниз
                 case Перечисление.Down:
-                    if (_startPosY + _boatHeight + Step < _pictureHeight)
+                    if (_startPosY + _carHeight + Step < _pictureHeight)
                     {
                         _startPosY += Step;
                         _makeStep = true;
@@ -144,18 +142,16 @@ public virtual void Moveboat(Перечисление direction, int leftIndent 
             a[3] = new Point((int)_startPosX + 100, (int)_startPosY + 40);
             a[4] = new Point((int)_startPosX, (int)_startPosY + 40);
             a[5] = new Point((int)_startPosX, (int)_startPosY);
-            g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100,40);
+            g.FillRectangle(br, (int)_startPosX, (int)_startPosY, 100, 40);
             g.FillPolygon(br, a);
 
-            Pen pen2 = new(Color.Black,5);
+            Pen pen2 = new(Color.Black, 5);
             g.DrawEllipse(pen2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
-            
+
             g.FillEllipse(br2, (int)_startPosX + 10, (int)_startPosY + 7, 85, 25);
-
-
-            
-
         }
+
+
         public void SetObject(float x, float y, int width, int height)
         {
             _startPosX = x;
@@ -165,7 +161,7 @@ public virtual void Moveboat(Перечисление direction, int leftIndent 
         }
         public bool MoveObject(Перечисление direction)
         {
-            Moveboat(direction);
+            MoveTransport(direction);
             return _makeStep;
             
         }
@@ -177,20 +173,20 @@ public virtual void Moveboat(Перечисление direction, int leftIndent 
         {
             _pictureWidth = width;
             _pictureHeight = height;
-            if (_startPosX + _boatWidth > width)
+            if (_startPosX + _carWidth > width)
             {
-                _startPosX = width - _boatWidth;
+                _startPosX = width - _carWidth;
             }
-            if (_startPosY + _boatHeight > height)
+            if (_startPosY + _carHeight > height)
             {
-                _startPosY = height - _boatHeight;
+                _startPosY = height - _carHeight;
             }
         }
         public (float Left, float Right, float Top, float Bottom)
         GetCurrentPosition()
         {
-            return (_startPosX.Value, _startPosX.Value + _boatWidth,
-            _startPosY.Value, _startPosY.Value + _boatHeight);
+            return (_startPosX.Value, _startPosX.Value + _carWidth,
+            _startPosY.Value, _startPosY.Value + _carHeight);
         }
     }
 }

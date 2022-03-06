@@ -9,11 +9,11 @@
 /// <summary>
 /// Ширина окна отрисовки
 /// </summary>
-protected int _pictureWidth=900;
+protected int _pictureWidth = 900;
     /// <summary>
     /// Высота окна отрисовки
     /// </summary>
-    protected int _pictureHeight=500;
+    protected int _pictureHeight = 500;
     /// <summary>
     /// Объект тестирования
     /// </summary>
@@ -31,7 +31,7 @@ protected int _pictureWidth=900;
     /// </summary>
     /// <param name="pictureWidth"></param>
     /// <param name="pictureHeight"></param>
-    /// <returns>true - установка прошла успешно, false - не хватает данных     для установки</returns>
+    /// <returns>true - установка прошла успешно, false - не хватает данных для установки</returns>
 public virtual bool SetPosition(int pictureWidth, int pictureHeight)
     {
         if (_object == null)
@@ -51,4 +51,4 @@ public virtual bool SetPosition(int pictureWidth, int pictureHeight)
     /// <returns>Результат тестирования</returns>
     public abstract string TestObject();
 }
-}
+}

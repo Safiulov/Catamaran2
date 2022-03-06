@@ -5,7 +5,7 @@ namespace Catamaran2
 {
     public partial class Катамаран : Form
     {
-        private Лодка _boat;
+        private Лодка _car;
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -20,7 +20,7 @@ namespace Catamaran2
         {
             Bitmap bmp = new(pictureBox1.Width, pictureBox1.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            _boat?.DrawObject(gr);
+            _car?.DrawObject(gr);
             pictureBox1.Image = bmp;
         }
         /// <summary>
@@ -29,11 +29,11 @@ namespace Catamaran2
         /// <param name="rnd"></param>
         private void SetObject(Random rnd)
         {
-            _boat?.SetObject(rnd.Next(10, 100), rnd.Next(10, 100),
+            _car?.SetObject(rnd.Next(10, 100), rnd.Next(10, 100),
             pictureBox1.Width, pictureBox1.Height);
-            toolStripStatusLabel1.Text = "Скорость:" + _boat?.Speed;
-            toolStripStatusLabel2.Text = "Вес: " + _boat?.Weight;
-            toolStripStatusLabel3.Text = "Цвет: " + _boat?.BodyColor.Name;
+            toolStripStatusLabel1.Text = "Скорость:" + _car?.Speed;
+            toolStripStatusLabel2.Text = "Вес: " + _car?.Weight;
+            toolStripStatusLabel3.Text = "Цвет: " + _car?.BodyColor.Name;
             Draw();
         }
 
@@ -41,18 +41,18 @@ namespace Catamaran2
 /// Проведение теста
 /// </summary>
 /// <param name="testObject"></param>
-private void RunTest1 (Abstract testObject)
+private void RunTest(Abstract testObject)
         {
-            if (testObject == null || _boat == null)
+            if (testObject == null || _car == null)
             {
                 return;
             }
-            var position = _boat.GetCurrentPosition();
-            testObject.Init(_boat);
+            var position = _car.GetCurrentPosition();
+            testObject.Init(_car);
             testObject.SetPosition(pictureBox1.Width,
             pictureBox1.Height);
             MessageBox.Show(testObject.TestObject());
-            _boat.SetObject(position.Left, position.Top, pictureBox1.Width,
+            _car.SetObject(position.Left, position.Top, pictureBox1.Width,
             pictureBox1.Height);
         }
         /// <summary>
@@ -62,7 +62,7 @@ private void RunTest1 (Abstract testObject)
         /// <param name="e"></param>
         private void PictureBoxboat_Resize(object sender, EventArgs e)
         {
-            _boat?.ChangeBorders(pictureBox1.Width, pictureBox1.Height);
+            _car?.ChangeBorders(pictureBox1.Width, pictureBox1.Height);
             Draw();
         }
         /// <summary>
@@ -73,7 +73,7 @@ private void RunTest1 (Abstract testObject)
         private void ButtonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _boat = new Лодка(rnd.Next(100, 300), rnd.Next(1000, 2000),
+            _car = new Лодка(rnd.Next(100, 300), rnd.Next(1000, 2000),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
             SetObject(rnd);
         }
@@ -85,7 +85,7 @@ private void RunTest1 (Abstract testObject)
         private void ButtonCreateModify_Click(object sender, EventArgs e)
         {
             Random rnd = new();
-            _boat = new ЛодкаКатамаран(rnd.Next(100, 300), rnd.Next(1000, 2000),
+            _car = new ЛодкаКатамаран(rnd.Next(100, 300), rnd.Next(1000, 2000),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256),
             rnd.Next(0, 256)), true, true, true);
@@ -104,16 +104,16 @@ private void ButtonMove_Click(object sender, EventArgs e)
             switch (name)
             {
                 case "buttonUp":
-                    _boat?.MoveObject(Перечисление.Up);
+                    _car?.MoveObject(Перечисление.Up);
                     break;
                 case "buttonDown":
-                    _boat?.MoveObject(Перечисление.Down);
+                    _car?.MoveObject(Перечисление.Down);
                     break;
                 case "buttonLeft":
-                    _boat?.MoveObject(Перечисление.Left);
+                    _car?.MoveObject(Перечисление.Left);
                     break;
                 case "buttonRight":
-                    _boat?.MoveObject(Перечисление.Right);
+                    _car?.MoveObject(Перечисление.Right);
                     break;
             }
             Draw();
@@ -128,7 +128,7 @@ private void ButtonMove_Click(object sender, EventArgs e)
             switch (comboBox2.SelectedIndex)
             {
                 case 0:
-                    RunTest1(new TestAbstract());
+                    RunTest(new TestAbstract());
                     break;
             }
         }
