@@ -14,7 +14,7 @@ namespace Catamaran2
             InitializeComponent();
         }
         /// <summary>
-        /// Метод отрисовки машины
+        /// Метод отрисовки лодки
         /// </summary>
         private void Draw()
         {
@@ -23,16 +23,19 @@ namespace Catamaran2
             _boat?.Drawboat(gr);
             pictureBox1.Image = bmp;
         }
+
+
         /// <summary>
         /// Изменение размеров формы отрисовки
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PictureBoxboat_Resize(object sender, EventArgs e)
+        private void PictureBoxCars_Resize(object sender, EventArgs e)
         {
             _boat?.ChangeBorders(pictureBox1.Width, pictureBox1.Height);
             Draw();
         }
+
         /// <summary>
         /// Обработка нажатия кнопки "Создать"
         /// </summary>
