@@ -56,7 +56,7 @@ private readonly int _placeSizeHeight = 80;
         /// <param name="p">Парковка</param>
         /// <param name="car">Добавляемая лодка</param>
         /// <returns></returns>
-        public static int operator +(Parking<T> p, T boat)
+        public static bool operator +(Parking<T> p, T boat)
         {
             for (int i = 0; i < p._places.Length; i++)
             {
@@ -66,10 +66,10 @@ private readonly int _placeSizeHeight = 80;
                     p._places[i].SetObject(5 + i / 5 * p._placeSizeWidth + 5,
                      i % 5 * p._placeSizeHeight + 20, p._pictureWidth,
                     p._pictureHeight);
-                    return i;
+                    return true;
                 }
             }
-            return -1;
+            return false;
         }
         /// <summary>
         /// Перегрузка оператора вычитания

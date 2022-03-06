@@ -85,7 +85,7 @@ public FormParking()
         /// <param name="car"></param>
         private void AddToParking(Лодка car)
         {
-            if (parking + car >= 0)
+            if (parking + car)
             {
                 Draw();
             }
