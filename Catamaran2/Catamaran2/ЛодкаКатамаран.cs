@@ -175,9 +175,25 @@ namespace Catamaran2
             }
         }
 
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info"></param>
+        public ЛодкаКатамаран(string info) : base(info)
+        {
+            string[] strs = info.Split(_separator);
+            if (strs.Length == 8)
+            {
+                DopColor = Color.FromName(strs[3]);
+                Leftpop = Convert.ToBoolean(strs[4]);
+                Rightpop = Convert.ToBoolean(strs[5]);
+                Parus = Convert.ToBoolean(strs[6]);
+            }
+        }
+        public override string ToString() => $"{base.ToString()}{_separator}{DopColor.Name}{_separator}{Leftpop}{_separator}{Rightpop}{ _separator}{ Parus}";
 
-       
-}
+
+    }
 }
 
       
