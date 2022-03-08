@@ -103,17 +103,17 @@ namespace Catamaran2
             }
             using (StreamWriter sw = new StreamWriter(filename))
             {
-                sw.WriteLine($"ParkingCollection{Environment.NewLine}", sw);
+                sw.Write($"ParkingCollection{Environment.NewLine}", sw);
                 foreach (var level in _parkingStages)
                 {
                     //Начинаем парковку
-                    sw.WriteLine($"Parking{_separator}{level.Key}{Environment.NewLine}", sw);
+                    sw.Write($"Parking{_separator}{level.Key}{Environment.NewLine}", sw);
                     foreach (var car in level.Value.GetNext())
                     {
                         //если место не пустое
                         if (car != null)
                         {
-                            sw.WriteLine($"{car.GetType().Name}{ _separator}{ car}{ Environment.NewLine}", sw);
+                            sw.Write($"{car.GetType().Name}{ _separator}{ car}{ Environment.NewLine}", sw);
                     }
                 }
             }
@@ -135,55 +135,58 @@ return true;
             {
                 return false;
             }
-            string bufferTextFromFile = "";
-            using (FileStream fs = new FileStream(filename, FileMode.Open))
-            {
-                byte[] b = new byte[fs.Length];
-                UTF8Encoding temp = new UTF8Encoding(true);
-                while (fs.Read(b, 0, b.Length) > 0)
-                {
-                    bufferTextFromFile += temp.GetString(b);
-                }
-            }
-            var strs = bufferTextFromFile.Split(new char[] { '\n', '\r' },
-            StringSplitOptions.RemoveEmptyEntries);
-            if (!strs[0].Contains("ParkingCollection"))
-            {
-                //если нет такой записи, то это не те данные
-                return false;
-            }
-            //очищаем записи
             
-        _parkingStages.Clear();
-            Iboat car = null;
-            string key = string.Empty;
-            for (int i = 1; i < strs.Length; ++i)
+            using (StreamReader fs = new StreamReader(filename))
             {
-                //идем по считанным записям
-                if (strs[i].Contains("Parking"))
-                {
-                    //начинаем новую парковку
-                    key = strs[i].Split(_separator)[1];
-                    _parkingStages.Add(key, new
-                    Parking<Iboat>(_pictureWidth, _pictureHeight));
-                    continue;
-                }
-                if (strs[i].Split(_separator)[0] == "Лодка")
-                {
-                    car = new Лодка(strs[i].Split(_separator)[1]);
-                }
-                else if (strs[i].Split(_separator)[0] == "ЛодкаКатамаран")
-                {
-                    car = new ЛодкаКатамаран(strs[i].Split(_separator)[1]);
-                }
-                var result = _parkingStages[key] + car;
-                if (!result)
+                string line = fs.ReadLine();
+                bool value = line.Contains("ParkingCollection");
+                if (!value)
                 {
                     return false;
                 }
+                else
+                {
+                    _parkingStages.Clear();
+                }
+
+                Iboat car = null;
+                string key = string.Empty;
+                while ((line = fs.ReadLine()) != null)
+                {
+                    string[] splitLine = line.Split(_separator);
+                    
+                    if (line.Contains("Parking"))
+                    {
+                        
+                        key = splitLine[1];
+                        _parkingStages.Add(key, new Parking<Iboat>(_pictureWidth, _pictureHeight));
+                        continue;
+                    }
+
+                    
+                        if (splitLine[0] == "Лодка")
+                        {
+                            car = new Лодка(splitLine[1]);
+                        }
+                        else if (splitLine[0] == "ЛодкаКатамаран")
+                        {
+                            car = new ЛодкаКатамаран(splitLine[1]);
+                        }
+                        var result = _parkingStages[key] + car;
+                        if (!result)
+                        {
+                            return false;
+                        }  
+                    
+                    
+
+
+                }
+                return true;
             }
-            return true;
         }
+
+              
 
 
 
