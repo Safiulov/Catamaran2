@@ -182,7 +182,7 @@ namespace Catamaran2
         public ЛодкаКатамаран(string info) : base(info)
         {
             string[] strs = info.Split(_separator);
-            if (strs.Length == 8)
+            if (strs.Length == 7)
             {
                 DopColor = Color.FromName(strs[3]);
                 Leftpop = Convert.ToBoolean(strs[4]);
@@ -190,7 +190,7 @@ namespace Catamaran2
                 Parus = Convert.ToBoolean(strs[6]);
             }
         }
-        public override string ToString() => $"{base.ToString()}{_separator}{DopColor.Name}{_separator}{Leftpop}{_separator}{Rightpop}{ _separator}{ Parus}";
+        public override string ToString() => $"{base.ToString()}{_separator}{DopColor.Name}{_separator}{Leftpop}{_separator}{Rightpop}{_separator}{Parus}";
 
 
     }

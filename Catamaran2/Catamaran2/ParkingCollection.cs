@@ -144,11 +144,7 @@ return true;
                 {
                     return false;
                 }
-                else
-                {
-                    _parkingStages.Clear();
-                }
-
+                _parkingStages.Clear();
                 Iboat car = null;
                 string key = string.Empty;
                 while ((line = fs.ReadLine()) != null)
@@ -158,13 +154,14 @@ return true;
                     if (line.Contains("Parking"))
                     {
                         
+
                         key = splitLine[1];
                         _parkingStages.Add(key, new Parking<Iboat>(_pictureWidth, _pictureHeight));
                         continue;
                     }
-
                     
-                        if (splitLine[0] == "Лодка")
+
+                    if (splitLine[0] == "Лодка")
                         {
                             car = new Лодка(splitLine[1]);
                         }
