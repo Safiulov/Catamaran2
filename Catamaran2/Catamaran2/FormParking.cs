@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 using System.Drawing;
 using System.Windows.Forms;
 namespace Catamaran2
@@ -9,12 +10,17 @@ namespace Catamaran2
         /// Объект от класса-коллекции гаваней
         /// </summary>
         private readonly ParkingCollection _parkingCollection;
+        /// <summary>
+        /// Логгер
+        /// </summary>
+        private readonly Logger logger;
         public FormParking()
         {
             InitializeComponent();
             _parkingCollection = new
             ParkingCollection(pictureBox2.Width, pictureBox2.Height);
-            
+            logger = LogManager.GetCurrentClassLogger();
+
         }
         /// <summary>
         /// Заполнение listBoxLevels
@@ -59,14 +65,18 @@ pictureBox2.Height);
         /// <param name="e"></param>
         private void ButtonAddParking_Click(object sender, EventArgs e)
         {
+           
             if (string.IsNullOrEmpty(textBox1.Text))
             {
                 MessageBox.Show("Введите название гавани", "Ошибка",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            logger.Info($"Добавили парковку {textBox1.Text}");
             _parkingCollection.AddParking(textBox1.Text);
             ReloadLevels();
+
+            
         }
 
 /// <summary>
@@ -121,36 +131,58 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
                 }
             }
         }
-/// <summary>
-/// Обработка нажатия кнопки "Забрать"
+        /// <summary>
+        /// Обработка нажатия кнопки "Забрать"
 
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
-private void ButtonTakeboat_Click(object sender, EventArgs e)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonTakeboat_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1 && maskedTextBox1.Text !=
             "")
             {
-                var car =
-                _parkingCollection[listBox1.SelectedItem.ToString()] -
-                Convert.ToInt32(maskedTextBox1.Text);
-                if (car != null)
+                try
                 {
-                    Катамаран form = new Катамаран();
-                    form.Setboat(car);
-                    form.ShowDialog();
+                    var car =
+                    _parkingCollection[listBox1.SelectedItem.ToString()] -
+                    Convert.ToInt32(maskedTextBox1.Text);
+                    if (car != null)
+                    {
+                        Катамаран form = new Катамаран();
+                        form.Setboat(car);
+                        form.ShowDialog();
+                    }
+                    logger.Info($"Изъят автомобиль {car} с места{ maskedTextBox1.Text}");
+
+                    Draw();
                 }
-                Draw();
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    MessageBox.Show(ex.Message, "Не найдено",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
+    
         /// <summary>
         /// Метод обработки выбора элемента на listBoxLevels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ListBoxParkings_SelectedIndexChanged(object sender,
- EventArgs e) => Draw();
+ EventArgs e)
+        {
+            Draw();
+            logger.Info($"Перешли на парковку {listBox1.SelectedItem}");
+
+        }
         /// <summary>
         /// Добавление объекта в класс-хранилище
         /// </summary>
@@ -194,42 +226,66 @@ private void ButtonTakeboat_Click(object sender, EventArgs e)
         {
             if (boat != null && listBox1.SelectedIndex > -1)
             {
-                if
-                ((_parkingCollection[listBox1.SelectedItem.ToString()]) + boat)
+                try
                 {
+                    if
+                    (_parkingCollection[listBox1.SelectedItem.ToString()] + boat)
+                    {
+                        Draw();
+                        logger.Info($"Добавлен автомобиль {boat}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Машину не удалось поставить");
+                    }
                     Draw();
                 }
-                else
+                catch (IndexOutOfRangeException ex)
                 {
-                    MessageBox.Show("Лодку не удалось поставить");
+                    MessageBox.Show(ex.Message, "Переполнение",
+MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+
+                }    
+
         }
 
 
 
 
-        /// <summary>
-        /// Обработка нажатия пункта меню "Сохранить"
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void СохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+            /// <summary>
+            /// Обработка нажатия пункта меню "Сохранить"
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void СохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (_parkingCollection.SaveData(saveFileDialog1.FileName))
+                try
                 {
+                    _parkingCollection.SaveData(saveFileDialog1.FileName);
                     MessageBox.Show("Сохранение прошло успешно",
                     "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " +
+                    saveFileDialog1.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат",
+                    MessageBox.Show(ex.Message, ex.GetType().Name,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
         /// <summary>
         /// Обработка нажатия пункта меню "Загрузить"
         /// </summary>
@@ -237,42 +293,30 @@ private void ButtonTakeboat_Click(object sender, EventArgs e)
         /// <param name="e"></param>
         private void ЗагрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (_parkingCollection.LoadData(openFileDialog1.FileName))
+                try
                 {
+                    _parkingCollection.LoadData(openFileDialog1.FileName);
                     MessageBox.Show("Загрузили", "Результат",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " +
+                    openFileDialog1.FileName);
                     ReloadLevels();
                     Draw();
                 }
-                else
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message, ex.GetType().Name,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("Не загрузили", "Результат",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 
 
 
 
- 

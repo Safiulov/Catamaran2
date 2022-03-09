@@ -51,10 +51,10 @@ namespace Catamaran2
         public void AddParking(string name)
         {
 
-            {
+            
                 _parkingStages.Add(name, new Parking<Iboat>(_pictureWidth,
                _pictureHeight));
-            }
+            
 
 
         }

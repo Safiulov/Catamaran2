@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System;
 namespace Catamaran2
 {
     /// <summary>
@@ -59,7 +60,7 @@ public static bool operator +(Parking<T> p, T boat)
         {
             if (p._places.Count == p._maxCount)
             {
-                return false;
+                throw new IndexOutOfRangeException("Больше лодок не поместиться, т.к, закончились места :(");
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -83,13 +84,19 @@ public static bool operator +(Parking<T> p, T boat)
         /// <returns></returns>
         public static T operator -(Parking<T> p, int index)
         {
-            if (!p.CheckFreePlace(index))
+            if (index > p._maxCount)
+                {
+                throw new ArgumentOutOfRangeException("Такого места на парковке нету");
+            }
+                if (!p.CheckFreePlace(index))
             {
+
                 T car = p._places[index];
                 p._places.Remove(car);
                 return car;
             }
             return null;
+
         }
         /// <summary>
         /// Метод проверки заполнености парковочного места (ячейки массива)
