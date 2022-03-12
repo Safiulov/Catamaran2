@@ -2,7 +2,7 @@
 using System.Drawing;
 namespace Catamaran2
 {
-    public class Лодка : Iboat
+    public class Лодка : Iboat, IEquatable<Лодка>
     {
         /// <summary>
         /// Скорость
@@ -208,7 +208,35 @@ public virtual void MoveTransport(Перечисление direction, int leftIn
         }
         public override string ToString() => $"{Speed}{_separator}{Weight}{_separator}{BodyColor.Name}";
 
-
+        /// <summary>
+        /// Метод интерфейса IEquatable для класса Car
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Лодка other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (Speed != other.Speed)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if (BodyColor != other.BodyColor)
+            {
+                return false;
+            }
+            return true;
+        }
 
     }
 }

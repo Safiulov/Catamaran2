@@ -7,7 +7,7 @@ namespace Catamaran2
     /// <summary>
     /// Класс отрисовки лодки
     /// </summary>
-    public class ЛодкаКатамаран : Лодка
+    public class ЛодкаКатамаран : Лодка, IEquatable<ЛодкаКатамаран>
     {
 
         /// <summary>
@@ -191,6 +191,50 @@ namespace Catamaran2
             }
         }
         public override string ToString() => $"{base.ToString()}{_separator}{DopColor.Name}{_separator}{Leftpop}{_separator}{Rightpop}{_separator}{Parus}";
+
+
+
+        /// <summary>
+        /// Метод интерфейса IEquatable для класса SportCar
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(ЛодкаКатамаран other)
+        {
+            var res = (this as Лодка).Equals(other as Лодка);
+            if (!res)
+            {
+                return res;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (Leftpop != other.Leftpop)
+            {
+                return false;
+            }
+            if (Rightpop != other.Rightpop)
+            {
+                return false;
+            }
+            if (Parus != other.Parus)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
+
+
 
 
     }
