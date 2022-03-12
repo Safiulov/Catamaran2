@@ -1,5 +1,5 @@
-﻿using System;
-using NLog;
+﻿using NLog;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 namespace Catamaran2
@@ -41,9 +41,11 @@ namespace Catamaran2
             else if (listBox1.Items.Count > 0 && index > -1 && index <
             listBox1.Items.Count)
             {
+
                 listBox1.SelectedIndex = index;
             }
         }
+
         /// <summary>
         /// Метод отрисовки гавани
         /// </summary>
@@ -58,58 +60,54 @@ pictureBox2.Height);
                 pictureBox2.Image = bmp;
             }
         }
-        /// <summary>
-        /// Обработка нажатия кнопки "Добавить гавань"
+
+        //// <summary>
+        /// Обработка нажатия кнопки "Добавить парковку"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonAddParking_Click(object sender, EventArgs e)
         {
-           
             if (string.IsNullOrEmpty(textBox1.Text))
             {
-                MessageBox.Show("Введите название гавани", "Ошибка",
+                MessageBox.Show("Введите название парковки", "Ошибка",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             logger.Info($"Добавили парковку {textBox1.Text}");
             _parkingCollection.AddParking(textBox1.Text);
             ReloadLevels();
-
-            
         }
 
-/// <summary>
-/// Обработка нажатия кнопки "Удалить гавань"
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
-private void ButtonDelParking_Click(object sender, EventArgs e)
+        //// <summary>
+        /// Обработка нажатия кнопки "Удалить парковку"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDelParking_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex > -1)
             {
-                if (MessageBox.Show($"Удалить парковку { listBox1.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-{                    _parkingCollection.DelParking(listBox1.SelectedItem.ToString());
+                if (MessageBox.Show($"Удалить парковку{ listBox1.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _parkingCollection.DelParking(listBox1.SelectedItem.ToString());
+                    logger.Info($"Удалили парковку{ listBox1.SelectedItem}");
                     ReloadLevels();
                 }
             }
         }
         /// <summary>
-        /// Обработка нажатия кнопки "Припарковать лодку"
+        /// Обработка нажатия кнопки "Добавить автомобиль"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSetboat_Click(object sender, EventArgs e)
+        private void ButtonSetCar_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    AddToParking(new Лодка(100, 1000, dialog.Color));
-                }
-            }
+            var formCarConfig = new Formboatconfig();
+            formCarConfig.AddEvent(Addboat);
+            formCarConfig.Show();
         }
+
         /// <summary>
         /// Обработка нажатия кнопки "Припарковать катамаран"
         /// </summary>
@@ -154,35 +152,33 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
                         form.ShowDialog();
                     }
                     logger.Info($"Изъят автомобиль {car} с места{ maskedTextBox1.Text}");
-
-                    Draw();
+                Draw();
                 }
-                catch (ArgumentOutOfRangeException ex)
+                catch (ParkingNotFoundException ex)
                 {
                     MessageBox.Show(ex.Message, "Не найдено",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch (Exception ex)
+                catch (ArgumentOutOfRangeException ex)
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
-    
+
         /// <summary>
         /// Метод обработки выбора элемента на listBoxLevels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ListBoxParkings_SelectedIndexChanged(object sender,
- EventArgs e)
+        EventArgs e)
         {
             Draw();
-            logger.Info($"Перешли на парковку {listBox1.SelectedItem}");
-
+            logger.Info($"Перешли на парковку{ listBox1.SelectedItem}");
         }
+
         /// <summary>
         /// Добавление объекта в класс-хранилище
         /// </summary>
@@ -222,17 +218,17 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
         /// Метод добавления машины
         /// </summary>
         /// <param name="car"></param>
-        private void Addboat(Iboat boat)
+        private void Addboat(Iboat car)
         {
-            if (boat != null && listBox1.SelectedIndex > -1)
+            if (car != null && listBox1.SelectedIndex > -1)
             {
                 try
                 {
                     if
-                    (_parkingCollection[listBox1.SelectedItem.ToString()] + boat)
+                    (_parkingCollection[listBox1.SelectedItem.ToString()] + car)
                     {
                         Draw();
-                        logger.Info($"Добавлен автомобиль {boat}");
+                        logger.Info($"Добавлен автомобиль {car}");
                     }
                     else
                     {
@@ -240,32 +236,28 @@ private void ButtonDelParking_Click(object sender, EventArgs e)
                     }
                     Draw();
                 }
-                catch (IndexOutOfRangeException ex)
+                catch (ParkingOverflowException ex)
                 {
                     MessageBox.Show(ex.Message, "Переполнение",
-MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch (Exception ex)
+                catch (IndexOutOfRangeException ex)
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-
-
-                }    
-
+            }
         }
 
 
 
 
-            /// <summary>
-            /// Обработка нажатия пункта меню "Сохранить"
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void СохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработка нажатия пункта меню "Сохранить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void СохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -281,10 +273,13 @@ MessageBoxButtons.OK, MessageBoxIcon.Error);
                 {
                     MessageBox.Show(ex.Message, ex.GetType().Name,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                MessageBox.Show("Не сохранилось", "Результат",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
 
         /// <summary>
         /// Обработка нажатия пункта меню "Загрузить"
@@ -316,7 +311,5 @@ MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
-
-
 
 

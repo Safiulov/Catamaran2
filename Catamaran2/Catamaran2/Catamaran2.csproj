@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.14" />
+    <PackageReference Include="NLog.Config" Version="4.7.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="C:\Users\User\.nuget\packages\nlog.config\4.7.14\contentFiles\any\any\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

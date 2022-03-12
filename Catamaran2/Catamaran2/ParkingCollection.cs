@@ -1,11 +1,9 @@
-﻿
-using System.Drawing;
-using System;
-using System.Linq;
-
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+
 
 namespace Catamaran2
 {
@@ -88,13 +86,13 @@ namespace Catamaran2
                 return null;
             }
         }
-       
+        protected readonly char _separator = ':';
         /// <summary>
         /// Сохранение информации по автомобилям на парковках в файл
         /// </summary>
         /// <param name="filename">Путь и имя файла</param>
         /// <returns></returns>
-        protected readonly char _separator = ':';
+
         public bool SaveData(string filename)
         {
             if (File.Exists(filename))
@@ -114,26 +112,25 @@ namespace Catamaran2
                         if (car != null)
                         {
                             sw.Write($"{car.GetType().Name}{ _separator}{ car}{ Environment.NewLine}", sw);
+                        }
                     }
                 }
             }
+            return true;
         }
-return true;
-}
 
 
 
-
-        /// <summary>
-        /// Загрузка нформации по автомобилям на парковках из файла
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        public bool LoadData(string filename)
+    /// <summary>
+    /// Загрузка нформации по автомобилям на парковках из файла
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    public bool LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new NullReferenceException("фАЙЛА НЕ СУЩЕСТВУЕТ");
             }
             
             using (StreamReader fs = new StreamReader(filename))
@@ -142,7 +139,7 @@ return true;
                 bool value = line.Contains("ParkingCollection");
                 if (!value)
                 {
-                    return false;
+                    throw new FileFormatException("Не тот файл");
                 }
                 _parkingStages.Clear();
                 Iboat car = null;
@@ -170,10 +167,7 @@ return true;
                             car = new ЛодкаКатамаран(splitLine[1]);
                         }
                         var result = _parkingStages[key] + car;
-                        if (!result)
-                        {
-                            return false;
-                        }  
+                        
                     
                     
 
