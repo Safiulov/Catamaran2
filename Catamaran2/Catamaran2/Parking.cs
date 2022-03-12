@@ -62,11 +62,12 @@ public static bool operator +(Parking<T> p, T boat)
             {
                 throw new IndexOutOfRangeException("Больше лодок не поместиться, т.к, закончились места");
             }
-            if (p._places.Contains(boat))
+            if (p._places.Contains(boat) && p._places.Equals(boat))
             {
                 throw new ParkingAlreadyHaveException();
             }
-            for (int i = 0; i < p._maxCount; i++)
+           
+                for (int i = 0; i < p._maxCount; i++)
             {
                 
                 {
@@ -75,8 +76,10 @@ public static bool operator +(Parking<T> p, T boat)
                      i % 5 * p._placeSizeHeight + 15, p._pictureWidth,
                     p._pictureHeight);
                     return true;
+                   
                 }
             }
+                       
             return false;
         }
 

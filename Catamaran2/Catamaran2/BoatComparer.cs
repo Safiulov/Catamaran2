@@ -5,19 +5,33 @@ namespace Catamaran2
     {
         public int Compare(Iboat x, Iboat y)
         {
-            if (x!=y)
+             if (x!=null && y!=null)
             {
-                return 0;
+                if (x is Лодка && y is ЛодкаКатамаран)
+                {
+                    return 1;
+                }
+                if (x is ЛодкаКатамаран && y is Лодка)
+                {
+                    return -1;
+                }
+                if (x is Лодка && y is Лодка)
+                {
+                    return (x is Лодка).CompareTo(y is Лодка);
+                }
+                if (x is ЛодкаКатамаран && y is ЛодкаКатамаран)
+                {
+                    return (y is ЛодкаКатамаран).CompareTo(y is ЛодкаКатамаран);
+                }
             }
-            return 1;    
-                        
+            return 0;
         }
 
     
     private int ComparerЛодка(Лодка x, Лодка y)
         {
             if (y == null)
-            {
+            { 
                 return 1;
             }
             if (x.Speed != y.Speed)
