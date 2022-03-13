@@ -16,57 +16,9 @@ namespace Catamaran2
 
 
 
-        /// <summary>
-        /// Возвращение списка названий парковок
-        /// </summary>
-        private List<string> _keys => _parkingStages.Keys.ToList();
-        /// <summary>
-        /// Текущий элемент для вывода через IEnumerator (будет обращаться по своему индексу к ключу словаря, по которму будет возвращаться запись)
-/// </summary>
-private int _currentIndex = -1;
-        /// <summary>
-        /// Возвращение текущего элемента для IEnumerator
-        /// </summary>
-        public string Current => _keys[_currentIndex];
-        /// <summary>
-        /// Возвращение текущего элемента для IEnumerator
-        /// </summary>
-        object IEnumerator.Current => _keys[_currentIndex];
+       
 
-        /// <summary>
-        /// Метод от IDisposable (унаследован в IEnumerator). В данном случае, логики в нем не требуется
-/// </summary>
-public void Dispose() { }
-        /// <summary>
-        /// Переход к следующему элементу
-        /// </summary>
-        /// <returns></returns>
-        public bool MoveNext()
-        {
-            if (_currentIndex + 1 >= _parkingStages.Count)
-            {
-                Reset();
-                return false;
-            }
-            _currentIndex++;
-            return true;
-        }
-/// <summary>
-/// Сброс при достижении конца
-/// </summary>
-public void Reset() => _currentIndex = -1;
-        /// <summary>
-        /// Получение ссылки на объект от класса, реализующего IEnumerator
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator<string> GetEnumerator() => this;
-        /// <summary>
-        /// Получение ссылки на объект от класса, реализующего IEnumerator
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator IEnumerable.GetEnumerator() => this;
-
-
+       
 
 
 
@@ -89,6 +41,33 @@ public void Reset() => _currentIndex = -1;
         /// Высота окна отрисовки
         /// </summary>
         private readonly int _pictureHeight;
+
+
+
+
+        /// <summary>
+        /// Возвращение списка названий парковок
+        /// </summary>
+        private List<string> _keys => _parkingStages.Keys.ToList();
+        /// <summary>
+        /// Текущий элемент для вывода через IEnumerator (будет обращаться по своему индексу к ключу словаря, по которму будет возвращаться запись)
+        /// </summary>
+        private int _currentIndex = -1;
+        /// <summary>
+        /// Возвращение текущего элемента для IEnumerator
+        /// </summary>
+        public string Current => _keys[_currentIndex];
+        /// <summary>
+        /// Возвращение текущего элемента для IEnumerator
+        /// </summary>
+        object IEnumerator.Current => _keys[_currentIndex];
+
+
+
+
+
+
+
 
 
         /// <summary>
@@ -238,7 +217,40 @@ public void Reset() => _currentIndex = -1;
             }
         }
 
-              
+
+        /// <summary>
+        /// Метод от IDisposable (унаследован в IEnumerator). В данном случае, логики в нем не требуется
+        /// </summary>
+        public void Dispose() { }
+        /// <summary>
+        /// Переход к следующему элементу
+        /// </summary>
+        /// <returns></returns>
+        public bool MoveNext()
+        {
+            if (_currentIndex + 1 >= _parkingStages.Count)
+            {
+                Reset();
+                return false;
+            }
+            _currentIndex++;
+            return true;
+        }
+        /// <summary>
+        /// Сброс при достижении конца
+        /// </summary>
+        public void Reset() => _currentIndex = -1;
+        /// <summary>
+        /// Получение ссылки на объект от класса, реализующего IEnumerator
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<string> GetEnumerator() => this;
+        /// <summary>
+        /// Получение ссылки на объект от класса, реализующего IEnumerator
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator() => this;
+
 
 
 
