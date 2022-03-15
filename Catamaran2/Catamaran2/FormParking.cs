@@ -154,16 +154,20 @@ pictureBox2.Height);
                     logger.Info($"Изъят автомобиль {car} с места{ maskedTextBox1.Text}");
                 Draw();
                 }
-                catch (ParkingNotFoundException ex)
+                catch (ArgumentOutOfRangeException ex)
                 {
+                    logger.Warn($"Такое место есть";
                     MessageBox.Show(ex.Message, "Не найдено",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch (ArgumentOutOfRangeException ex)
+                catch (ParkingNotFoundException ex)
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
+                
+
             }
         }
 
