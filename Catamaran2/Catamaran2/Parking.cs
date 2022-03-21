@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using NLog;
 
 namespace Catamaran2
 {
@@ -10,6 +11,7 @@ namespace Catamaran2
 /// <typeparam name="T"></typeparam>
 public class Parking<T> where T : class, Iboat
     {
+        private readonly Logger logger;
         /// <summary>
         /// Список объектов, которые храним
         /// </summary>
@@ -61,6 +63,7 @@ public static bool operator +(Parking<T> p, T boat)
             if (p._places.Count == p._maxCount)
             {
                 throw new IndexOutOfRangeException("Больше лодок не поместиться, т.к, закончились места");
+                
             }
             for (int i = 0; i < p._maxCount; i++)
             {

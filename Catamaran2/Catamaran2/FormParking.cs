@@ -163,6 +163,7 @@ pictureBox2.Height);
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Такого места нету");
                 }
             }
         }
@@ -245,6 +246,7 @@ pictureBox2.Height);
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Парковка переполнена");
                 }
             }
         }
